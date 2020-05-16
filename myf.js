@@ -1,24 +1,18 @@
-import { readdir } from "fs";
+
 var vid = document.getElementById("myf");
-function myf() {
+function change() {
     
     
-       vid.src = "./Kaksha Gyarvi.mkv"
+       vid.src = "./Panda.mp4"
+       console.log("log1");
 }
 
 
-function myf2() {
-    vid.src = "./Movies Arena/Man of Steel/Man of Steel.mp4";
+function change2() {
+    vid.src = "./Movies/Any Movie.mp4";
 }
 
-
-readdir("./", (err, list) => {
-    musicLibrary = list;
-    console.log(musicLibrary);
-  });
-  app.get("/filelist", (req, res) => {
-    res.send(musicLibrary);
-  });
-
- var libfile = getElementById("musicLibrary");
- libfile = musicLibrary;
+function Search() 
+{
+  var input;
+}
