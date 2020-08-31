@@ -1,0 +1,23 @@
+{
+  "name": "bhardwajfileprotocol",
+  "version": "1.0.0",
+  "description": "File Server For LAN",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mudit67/BhardwajFileProtocol.git"
+  },
+  "author": "Bhardwaj",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mudit67/BhardwajFileProtocol/issues"
+  },
+  "homepage": "https://github.com/mudit67/BhardwajFileProtocol#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

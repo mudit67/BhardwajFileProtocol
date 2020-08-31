@@ -1,4 +1,0 @@
-current target is to extract a list of the files in the directories in the same folder with names like movies, TV, etc.
-
-
-then to create a Search bar that would compare and tell whether there is entry of that name or not.
