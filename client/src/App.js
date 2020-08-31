@@ -1,0 +1,12 @@
+import React from 'react';
+
+function App() {
+  return (
+    <h1>
+      This is working again.<br/>
+      After Yarn Build.
+    </h1>
+  );
+}
+
+export default App;
