@@ -5,7 +5,8 @@ class App extends React.Component {
     super(props);
     this.state = {
       searchVal: null,
-      respVal:""
+      respVal:"",
+      serResArr:[]
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -13,16 +14,30 @@ class App extends React.Component {
     // console.log(this.state.searchVal);
     this.setState({searchVal: event.target.value});
   };
+  logArr(){
+    fetch('http://localhost:8000/printarr')
+    .then(response => response.json())
+    .then((data) => 
+      {
+        let dataArr = Object.entries(data);
+        console.log(dataArr);
+        this.setState({ serResArr: dataArr.filesJson})
+      } 
+    );
+  }
   sendRequest(){
-    // debugger
-
-    var resp     
+    
     fetch('http://localhost:8000/search?q='+this.state.searchVal)
     .then(response => response.json())
-    .then((data)=> {console.log(data);this.setState({respVal:data.data})} );
+    .then((data)=> 
+      {
+        console.log(data);
+        this.setState({respVal:data.data})
+      } 
+    );
   }
   render(){
-    const { searchVal,respVal } = this.state;
+    const {respVal } = this.state;
     return (
       <>
         <Nav>
@@ -33,6 +48,7 @@ class App extends React.Component {
             </pre>
              
               <button type="button" onClick={(e) => {this.sendRequest(e)}}> search </button>
+              <button type="button" onClick={this.logArr}> Print </button>
             {respVal}
           </form>
         </Nav>
