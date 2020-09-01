@@ -1,5 +1,6 @@
 import React from 'react';
 import {Nav,Container,Col,Row} from 'reactstrap';
+import Arr from './components/arr.js'
 class App extends React.Component {
   constructor(props){
     super(props);
@@ -25,8 +26,8 @@ class App extends React.Component {
     .then((data) => 
       {
         let dataArr = Object.entries(data);
-        console.log(dataArr);
-        this.setState({ serResArr: dataArr.filesJson});
+        this.setState({ serResArr: dataArr[0][1]});
+        console.log(dataArr[0][1]);
       } 
     );
   }
@@ -43,22 +44,6 @@ class App extends React.Component {
   }
   render(){
     const {respVal } = this.state;
-    const filesArray = () => {
-      if(this.state.serResArr!=null){
-        this.state.serResArr.map((file) => {
-          return(
-            <div key={file.id}>
-              {file.data}
-            </div>
-            );
-        });
-        }
-        else{
-          return(
-          <div></div>
-          );
-        }
-      };   
     return (
       <>
         <Nav className="offset-1 mt-5">
@@ -81,7 +66,7 @@ class App extends React.Component {
             </Col>
           </Row>  
           <Row>
-            {filesArray}
+            <Arr filesJson={this.state.serResArr}/>
           </Row>
         </Container>
       </>
