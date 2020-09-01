@@ -26,7 +26,7 @@ class App extends React.Component {
       {
         let dataArr = Object.entries(data);
         console.log(dataArr);
-        this.setState({ serResArr: dataArr.filesJson})
+        this.setState({ serResArr: dataArr.filesJson});
       } 
     );
   }
@@ -36,13 +36,29 @@ class App extends React.Component {
     .then(response => response.json())
     .then((data)=> 
       {
-        console.log(data);
+        console.log(data.data);
         this.setState({respVal:data.data})
       } 
     );
   }
   render(){
     const {respVal } = this.state;
+    const filesArray = () => {
+      if(this.state.serResArr!=null){
+        this.state.serResArr.map((file) => {
+          return(
+            <div key={file.id}>
+              {file.data}
+            </div>
+            );
+        });
+        }
+        else{
+          return(
+          <div></div>
+          );
+        }
+      };   
     return (
       <>
         <Nav className="offset-1 mt-5">
@@ -64,6 +80,9 @@ class App extends React.Component {
               {respVal}
             </Col>
           </Row>  
+          <Row>
+            {filesArray}
+          </Row>
         </Container>
       </>
     );
