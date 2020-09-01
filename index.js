@@ -44,18 +44,21 @@ app.get('/', function (req, res) {
   res.send('hello world')
 })
 var reqUp = "";
-var reqUP
+// var reqUP remove this 
 app.get('/search', function (req, res) {
 	reqUp = req.query.q.toUpperCase();
 	console.log(reqUp);
+	var respArr =[]
 	for (var i = 0; i < count ; i++ ) {
-		if (reqUp==filesArr[i]) {
+		if (filesArr[i].match(reqUp)) {
 			console.log("Found.");
-			res.send(JSON.stringify({ data: req.query.q.toUpperCase() + "\n Found. "}));
+			respArr.push(filesArr[i])
+			// res.send(JSON.stringify({ data: req.query.q.toUpperCase() + "\n Found. "})); // you should only send response once 
 			break;
 		}
 	}
-  res.send(JSON.stringify({ data: req.query.q.toUpperCase()}));
+//   res.send(JSON.stringify({ data: req.query.q.toUpperCase()}));// why are you still sending this 
+  	res.send(JSON.stringify(respArr));// why are you still sending this 
 })
 
 app.get('/printarr',(req,res)=>{

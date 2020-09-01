@@ -54,6 +54,7 @@ class App extends React.Component {
               <button type="button" onClick={(e) => {this.sendRequest(e)}} 
               style={{marginLeft: 1 + 'em'}}>
                search </button>
+               {/* use some directive to loop and print multiple items that come in the array */}
               <button type="button" onClick={this.logArr} 
               style={{marginLeft: 1 + 'em'}} > Print </button>
           </form>
