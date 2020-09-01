@@ -1,5 +1,5 @@
 import React from 'react';
-import {Nav} from 'reactstrap';
+import {Nav,Container,Col,Row} from 'reactstrap';
 class App extends React.Component {
   constructor(props){
     super(props);
@@ -9,9 +9,14 @@ class App extends React.Component {
       serResArr:[]
     };
     this.handleChange = this.handleChange.bind(this);
+    this.logArr = this.logArr.bind(this);
+    this.handleSubmit=this.handleSubmit.bind(this)
   }
+  handleSubmit(e){
+    e.preventDefault();
+    this.sendRequest();
+  };
   handleChange(event){
-    // console.log(this.state.searchVal);
     this.setState({searchVal: event.target.value});
   };
   logArr(){
@@ -40,19 +45,26 @@ class App extends React.Component {
     const {respVal } = this.state;
     return (
       <>
-        <Nav>
-          <form>
-            <pre>
+        <Nav className="offset-1 mt-5">
+          <form onSubmit={this.handleSubmit}>
               <label htmlFor="search">Search</label> 
-              <input type="search" placeholder="Search..." id="search" onChange={this.handleChange} style={{marginLeft: 1 + 'em'}}/>
-            </pre>
-             
-              <button type="button" onClick={(e) => {this.sendRequest(e)}}> search </button>
-              <button type="button" onClick={this.logArr}> Print </button>
-            {respVal}
+              <input type="search" placeholder="Search..." id="search" 
+              onChange={this.handleChange} style={{marginLeft: 1 + 'em'}} 
+              onSubmit={this.handleSubmit}/>             
+              <button type="button" onClick={(e) => {this.sendRequest(e)}} 
+              style={{marginLeft: 1 + 'em'}}>
+               search </button>
+              <button type="button" onClick={this.logArr} 
+              style={{marginLeft: 1 + 'em'}} > Print </button>
           </form>
         </Nav>
-        
+        <Container>
+          <Row>
+            <Col>
+              {respVal}
+            </Col>
+          </Row>  
+        </Container>
       </>
     );
   }  

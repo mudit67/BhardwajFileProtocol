@@ -14,6 +14,8 @@ app.listen(8000, () =>{
 // 	res.end({Found : true});
 // });
 var fileUP;
+var fileUPe;
+var fileLen;
 var count = 0;
 let filesArr = [];
 var listarr = '';
@@ -24,9 +26,10 @@ fs.readdir('files',(err, files) => {
 	}
 	files.forEach(function (file) {
 		fileUP = file.toUpperCase();
-		filesArr[count] = [fileUP];
+		fileUPe = fileUP.substring(0,(fileUP.length-4))
+		filesArr[count] = [fileUPe];
 		listarr = listarr.concat('\n',fileUP);
-		console.log(fileUP);
+		console.log(fileUPe);
 		countstr = count.toString();
 		fileJson = {
 			i : fileUP
@@ -40,11 +43,19 @@ fs.readdir('files',(err, files) => {
 app.get('/', function (req, res) {
   res.send('hello world')
 })
+var reqUp = "";
+var reqUP
 app.get('/search', function (req, res) {
-	console.log(req.query)
-	//  some  dumm ylogic 
-	
-  res.send(JSON.stringify({ data:req.query.q.toUpperCase()}));
+	reqUp = req.query.q.toUpperCase();
+	console.log(reqUp);
+	for (var i = 0; i < count ; i++ ) {
+		if (reqUp==filesArr[i]) {
+			console.log("Found.");
+			res.send(JSON.stringify({ data: req.query.q.toUpperCase() + "\n Found. "}));
+			break;
+		}
+	}
+  res.send(JSON.stringify({ data: req.query.q.toUpperCase()}));
 })
 
 app.get('/printarr',(req,res)=>{
