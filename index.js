@@ -45,12 +45,13 @@ app.get('/', function (req, res) {
 })
 var reqUp = "";
 var reqUP
-var flag = true;
+
 app.get('/search', function (req, res) {
+	var flag = true;
 	reqUp = req.query.q.toUpperCase();
 	console.log(reqUp);
 	for (var i = 0; i < count ; i++ ) {
-		if (String(filesArr[i]).match(reqUp)) {
+		if (filesArr[i]==(reqUp)) {
 			console.log("Found.");
 			res.send(JSON.stringify({ data: req.query.q.toUpperCase() + "\n Found. "}));
 			flag = false;
