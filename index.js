@@ -25,16 +25,16 @@ fs.readdir('files',(err, files) => {
 		console.log("Unable to Read the Directory " + err);
 	}
 	files.forEach(function (file) {
-		fileUP = file.toUpperCase();
-		fileUPe = fileUP.substring(0,(fileUP.length-4))
+		// fileUP = file.toUpperCase();
+		fileUPe = file.substring(0,(file.length-4)).toUpperCase();
 		filesArr[count] = [fileUPe];
-		listarr = listarr.concat('\n',fileUP);
+		listarr = listarr.concat('\n',fileUPe);
 		console.log(fileUPe);
 		countstr = count.toString();
-		fileJson = {
-			i : fileUP
-		};
-	 filesJson.push(file);
+		// fileJson = {
+		// 	i : fileUPe
+		// };
+	 filesJson.push(fileUPe);
 		count++
 	});
 	console.log("\n");
@@ -45,17 +45,21 @@ app.get('/', function (req, res) {
 })
 var reqUp = "";
 var reqUP
+var flag = true;
 app.get('/search', function (req, res) {
 	reqUp = req.query.q.toUpperCase();
 	console.log(reqUp);
 	for (var i = 0; i < count ; i++ ) {
-		if (reqUp==filesArr[i]) {
+		if (String(filesArr[i]).match(reqUp)) {
 			console.log("Found.");
 			res.send(JSON.stringify({ data: req.query.q.toUpperCase() + "\n Found. "}));
+			flag = false;
 			break;
 		}
 	}
-  res.send(JSON.stringify({ data: req.query.q.toUpperCase()}));
+	if(flag){
+  	res.send(JSON.stringify({ data: req.query.q.toUpperCase()}));
+  	}
 })
 
 app.get('/printarr',(req,res)=>{

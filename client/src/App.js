@@ -27,7 +27,7 @@ class App extends React.Component {
       {
         let dataArr = Object.entries(data);
         this.setState({ serResArr: dataArr[0][1]});
-        console.log(dataArr[0][1]);
+        console.log(this.state.serResArr);
       } 
     );
   }
