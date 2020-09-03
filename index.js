@@ -13,9 +13,7 @@ app.listen(8000, () =>{
 // 	res.setHeader('Content-Type', 'JSON');
 // 	res.end({Found : true});
 // });
-var fileUP;
 var fileUPe;
-var fileLen;
 var count = 0;
 let filesArr = [];
 var listarr = '';
@@ -30,7 +28,6 @@ fs.readdir('files',(err, files) => {
 		filesArr[count] = [fileUPe];
 		listarr = listarr.concat('\n',fileUPe);
 		console.log(fileUPe);
-		countstr = count.toString();
 		// fileJson = {
 		// 	i : fileUPe
 		// };
