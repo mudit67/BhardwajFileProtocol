@@ -13,10 +13,31 @@ app.listen(8000, () =>{
 
 var reqUp = "";
 let sql = `SELECT Name name FROM filestest WHERE name = ? ORDER BY name`;
+function check (searchParamsUp,searchParams,res,flag,callback) {
+	db.each(sql, searchParamsUp,(err, row) => {
+		if(err){
+			throw err;
+		}
+		console.log("flag = found")
+		flag=false;
+		res.send(JSON.stringify({ data: searchParams.query.q.toUpperCase() + "\n Found. "}));
+		
+	
+	});	
+	console.log("callback");
+	callback(null,searchParams,res,flag);
+	
+}
+
+// function checkAbsent (searchParams,res,flag){
+// 	if(flag){
+//   	res.send(JSON.stringify({ data: searchParams.query.q.toUpperCase()}));
+//   	console.log(searchParams);
+//   	}
+// }
 app.get('/search', function (req, res) {
 	var flag = true;
 	reqUp = req.query.q.toUpperCase();
-	console.log(reqUp);
 	// for (var i = 0; i < count ; i++ ) {
 	// 	if (filesArr[i]==(reqUp)) {
 	// 		console.log("Found.");
@@ -25,16 +46,24 @@ app.get('/search', function (req, res) {
 	// 		break;
 	// 	}
 	// }
-	db.each(sql, [reqUp],(err, row) => {
-		if(err){
-			throw err;
-		}
-		res.send(JSON.stringify({ data: req.query.q.toUpperCase() + "\n Found. "}));
-		flag = false;
+	// db.each(sql, [reqUp],(err, row) => {
+	// 	if(err){
+	// 		throw err;
+	// 	}
+	// 	res.send(JSON.stringify({ data: req.query.q.toUpperCase() + "\n Found. "}));
+	// 	flag = false;
+	// 	if(flag){
+ //  		res.send(JSON.stringify({ data: req.query.q.toUpperCase()}));
+ //  		}
+	// });
+	
+	// check(reqUp,req,res,flag);
+	check(reqUp,req,res,(err,searchParams,res,flag) => {
 		if(flag){
-  		res.send(JSON.stringify({ data: req.query.q.toUpperCase()}));
+  			res.send(JSON.stringify({ data: searchParams.query.q.toUpperCase()}));
+  			console.log(searchParams);
   		}
 	});
 	
-})
+});
 
