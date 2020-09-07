@@ -19,6 +19,7 @@
   "homepage": "https://github.com/mudit67/BhardwajFileProtocol#readme",
   "dependencies": {
     "express": "^4.17.1",
+    "nodemon": "^2.0.4",
     "sqlite3": "^5.0.0"
   }
 }
