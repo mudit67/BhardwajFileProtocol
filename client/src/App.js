@@ -9,41 +9,33 @@ class App extends React.Component {
       respVal: [],
       serResArr: [],
     };
+    this.debounceTimeout =0
     this.handleChange = this.handleChange.bind(this);
     this.logArr = this.logArr.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.updateList = this.updateList.bind(this);
-    this.debounce = this.debounce.bind(this);
   }
   handleSubmit(e) {
     e.preventDefault();
     this.sendRequest();
   }
-  debounce(func, wait, immediate) {
-    var timeout;
-    var context = this, args = arguments;
-    var later = function() {
-      timeout = null;
-      if (!immediate) func.apply(context, args);
-    };
-    var callNow = immediate && !timeout;
-    clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
-    if (callNow) func.apply(context, args);
-  }
 
   updateList(){
-    fetch("http://localhost:8000/search?q=" + this.state.searchVal)
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-      this.setState({ respVal: data });
-    });
+    // this is debounced update list 
+    clearTimeout(this.debounceTimeout)
+    this.debounceTimeout = setTimeout(()=>{
+      fetch("http://localhost:8000/search?q=" + this.state.searchVal)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        this.setState({ respVal: data });
+      });  
+    }, 1000 /*this the wait interval before sending call to backend*/)
   }
 
   handleChange(event) {
     this.setState({ searchVal: event.target.value });
-    this.debounce(this.updateList,1000)
+    this.updateList()
   }
   logArr() {
     fetch("http://localhost:8000/printarr")
