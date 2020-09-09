@@ -13,13 +13,17 @@ class App extends React.Component {
       // searchVal: "",
       // respVal: [],
       // serResArr: [],
-      // vidName: null
+      vidName: null
     };
     // this.debounceTimeout =0
     // this.handleChange = this.handleChange.bind(this);
     // this.logArr = this.logArr.bind(this);
     // this.handleSubmit = this.handleSubmit.bind(this);
     // this.updateList = this.updateList.bind(this);
+    // function callbackVid (srcName)=> {
+    //   this.setState({vidName: srcName});
+    //   console.log(this.state.vidName);
+    // };
   }
   // handleSubmit(e) {
   //   e.preventDefault();
@@ -134,8 +138,8 @@ class App extends React.Component {
       <BrowserRouter>
         <div>
           <Switch>
-            <Route path="/player" component={() => <VidComponent/>}/>
-            <Route path="/search" component={() => <Search/>}/>
+            <Route path="/player" component={() => <VidComponent parentCallback = {(callbacksrc) => {this.setState({vidName: callbacksrc })}}/>}/>
+            <Route path="/search" component={() => <Search source={this.state.vidName}/>}/>
             <Redirect to='/search'/>
           </Switch>
         </div>

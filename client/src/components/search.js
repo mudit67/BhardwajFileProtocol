@@ -18,7 +18,7 @@ class Search extends React.Component {
     e.preventDefault();
     //this.sendRequest();
     if((this.state.searchVal + ".mp4")===(this.state.respVal[0])){
-      this.setState({vidName:this.state.searchVal });
+      this.props.parentCallback(this.state.searchVal);
       console.log(this.state.vidName);
     }
    console.log(this.state.respVal[0]);
