@@ -9,33 +9,34 @@ class App extends React.Component {
       respVal: [],
       serResArr: [],
     };
-    this.debounceTimeout =0
+    this.debounceTimeout = 0;
     this.handleChange = this.handleChange.bind(this);
     this.logArr = this.logArr.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.updateList = this.updateList.bind(this);
   }
   handleSubmit(e) {
+    debugger
     e.preventDefault();
     this.sendRequest();
   }
 
-  updateList(){
-    // this is debounced update list 
-    clearTimeout(this.debounceTimeout)
-    this.debounceTimeout = setTimeout(()=>{
+  updateList() {
+    // this is debounced update list
+    clearTimeout(this.debounceTimeout);
+    this.debounceTimeout = setTimeout(() => {
       fetch("http://localhost:8000/search?q=" + this.state.searchVal)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        this.setState({ respVal: data });
-      });  
-    }, 1000 /*this the wait interval before sending call to backend*/)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          this.setState({ respVal: data });
+        });
+    }, 1000 /*this the wait interval before sending call to backend*/);
   }
 
   handleChange(event) {
     this.setState({ searchVal: event.target.value });
-    this.updateList()
+    this.updateList();
   }
   logArr() {
     fetch("http://localhost:8000/printarr")
@@ -69,35 +70,24 @@ class App extends React.Component {
     return (
       <>
         <Nav className="offset-1 mt-5">
-          {/* <form onSubmit={this.handleSubmit}> */}
           <label htmlFor="search">Search</label>
           <input
-            type="search"
             placeholder="Search..."
             id="search"
             value={this.state.searchVal}
             style={{ marginLeft: 1 + "em" }}
             onChange={this.handleChange}
-            onSubmit={this.handleSubmit}
           />
 
           <button
             type="button"
             onClick={(e) => {
-              this.sendRequest(e);
+              this.handleSubmit(e);
             }}
             style={{ marginLeft: 1 + "em" }}
           >
             Search
           </button>
-          <button
-            type="button"
-            onClick={this.logArr}
-            style={{ marginLeft: 1 + "em" }}
-          >
-            Print
-          </button>
-          {/* </form> */}
         </Nav>
         <Container>
           <Row>
