@@ -1,6 +1,8 @@
 import React from "react";
-import { Nav, Container, Col, Row } from "reactstrap";
+import { Nav, Container, Col, Row,Dropdown, DropdownToggle, DropdownMenu, DropdownItem  } from "reactstrap";
 import {withRouter} from 'react-router-dom';
+
+
 class Search extends React.Component {
 	constructor(props){
 		super(props);
@@ -13,6 +15,7 @@ class Search extends React.Component {
     this.logArr = this.logArr.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.updateList = this.updateList.bind(this);
+    // this.redirectToPlayer = this.redirectToPlayer.bind(this);
 	}
 	handleSubmit(e) {
     e.preventDefault();
@@ -52,51 +55,27 @@ class Search extends React.Component {
         console.log( "state = "+ this.state.serResArr);
       });
   }
+  redirectToPlayer(videoName) {
+  	this.props.parentCallback(videoName.substring(0,videoName.length -4));
+  	this.props.history.push("/player");
 
-  // handleSearchChange(event) {
-  //   this.setState({ searchVal: event.target.value });
-  // }
-
-  // sendRequest() {
-  //   fetch("http://localhost:8000/search?q=" + this.state.searchVal)
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       console.log(data.data);
-  //       this.setState({ respVal: data.data });
-  //     });
-  // }
-
+  }
   render() {
     const respVal = this.state.respVal;
     var rows = [];
-    for (var i = 0; i < respVal.length; i++) {
-      rows.push(<li>{respVal[i]}</li>);
-    }
-    // const vidName="Mudit";
+    rows = respVal.map((Val, index) => {
+    	return(
+    	<DropdownItem key={index} type="button" className="btn" onClick={this.redirectToPlayer.bind(this, Val)}>
+   		 		{Val.substring(0,Val.length -4)}
+    	</DropdownItem>
+    	);
+    });
     return (
 	      <>
 	        <Nav className="offset-1 mt-5">
 	          <form onSubmit={this.handleSubmit}> 
+	          
 	          <label htmlFor="search">Search</label>
-	          <input
-	            type="search"
-	            placeholder="Search..."
-	            id="search"
-	            value={this.state.searchVal}
-	            style={{ marginLeft: 1 + "em" }}
-	            onChange={this.handleChange}
-	            onSubmit={this.handleSubmit}
-	          />
-
-	          <button
-	            type="button"
-	            onClick={(e) => {
-	              this.handleSubmit(e);
-	            }}
-	            style={{ marginLeft: 1 + "em" }}
-	          >
-	            Search
-	          </button>
 	          <button
 	            type="button"
 	            onClick={this.logArr}
@@ -108,12 +87,41 @@ class Search extends React.Component {
 	        </Nav>
 	        <Container>
 	          <Row>
-	            <Col>{rows}</Col>
+	            <Col>
+	            	
+	            	
+	            </Col>
 	          </Row>
 	          <Row>
 	          </Row>
 	          <Row>
 	            <div className="col-8 offset-2">
+	           		<Col>
+	          	<input
+	            type="search"
+	            placeholder="Search..."
+	            id="search"
+	            value={this.state.searchVal}
+	            onChange={this.handleChange}
+	            onSubmit={this.handleSubmit}
+	          	className="col-4"
+	          	/>
+	          	<Dropdown isOpen={true}>
+	          	<DropdownToggle className="d-none" />
+	          	  <DropdownMenu className="col-4" style={{position: "realtive"}}> 	
+	          	   	{rows}
+			      </DropdownMenu>
+		       	</Dropdown>
+		       </Col>
+	          <button
+	            type="button"
+	            onClick={(e) => {
+	              this.handleSubmit(e);
+	            }}
+	            className= "m-1 search-button"
+	          >
+	            Search
+	          </button>
 	            </div>
 	          </Row>
 	        </Container>
@@ -124,3 +132,4 @@ class Search extends React.Component {
 }
 
 export default withRouter(Search);
+// <div class="dropdown" isOpen={true} toggle={() => {return(true);}}  inNavbar= {true} nav={true} className="list-unstyled">

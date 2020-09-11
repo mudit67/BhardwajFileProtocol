@@ -12,7 +12,7 @@ class App extends React.Component {
       // searchVal: "",
       // respVal: [],
       // serResArr: [],
-      vidName: "Mudit",
+      vidName: null,
       redirect: false
     };
     // this.debounceTimeout =0
