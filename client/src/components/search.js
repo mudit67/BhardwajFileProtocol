@@ -1,6 +1,6 @@
 import React from "react";
 import { Nav, Container, Col, Row } from "reactstrap";
-
+import {withRouter} from 'react-router-dom';
 class Search extends React.Component {
 	constructor(props){
 		super(props);
@@ -19,6 +19,7 @@ class Search extends React.Component {
     //this.sendRequest();
     if((this.state.searchVal + ".mp4")===(this.state.respVal[0])){
       this.props.parentCallback(this.state.searchVal);
+       this.props.history.push("/player");
       console.log(this.state.vidName);
     }
    console.log(this.state.respVal[0]);
@@ -122,4 +123,4 @@ class Search extends React.Component {
 	}
 }
 
-export default Search;
+export default withRouter(Search);

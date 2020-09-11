@@ -1,6 +1,5 @@
 import React from "react";
 import {Switch, Redirect, Route,BrowserRouter} from "react-router-dom";
-
 // import { Nav, Container, Col, Row } from "reactstrap";
 // import Arr from "./components/arr.js";
 import Search from './components/search.js';
@@ -13,7 +12,8 @@ class App extends React.Component {
       // searchVal: "",
       // respVal: [],
       // serResArr: [],
-      vidName: null
+      vidName: "Mudit",
+      redirect: false
     };
     // this.debounceTimeout =0
     // this.handleChange = this.handleChange.bind(this);
@@ -138,12 +138,14 @@ class App extends React.Component {
       <BrowserRouter>
         <div>
           <Switch>
-            <Route path="/player" component={() => <VidComponent parentCallback = {(callbacksrc) => {this.setState({vidName: callbacksrc })}}/>}/>
-            <Route path="/search" component={() => <Search source={this.state.vidName}/>}/>
-            <Redirect to='/search'/>
+            
+              <Route path="/player" component={() => <VidComponent srcName={this.state.vidName}/>}/>
+              <Route path='/search' component={() => <Search parentCallback = {(callbacksrc) => {this.setState({vidName: callbacksrc, redirect:true}); console.log(this.state.vidName);}  }/> }/>
+              <Redirect to='/search'/>
           </Switch>
         </div>
       </BrowserRouter>
+      
     );
   };
 }
