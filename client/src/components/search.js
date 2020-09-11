@@ -1,5 +1,5 @@
 import React from "react";
-import { Nav, Container, Col, Row,Dropdown, DropdownToggle, DropdownMenu, DropdownItem  } from "reactstrap";
+import {Container, Col, Row,Dropdown, DropdownToggle, DropdownMenu, DropdownItem  } from "reactstrap";
 import {withRouter} from 'react-router-dom';
 
 
@@ -8,14 +8,15 @@ class Search extends React.Component {
 		super(props);
 		this.state = {
 			respVal: [],
-			vidName: null
+			vidName: null,
+            menuToggle: false
 		};
 	this.debounceTimeout = 0;
     this.handleChange = this.handleChange.bind(this);
     this.logArr = this.logArr.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.updateList = this.updateList.bind(this);
-    // this.redirectToPlayer = this.redirectToPlayer.bind(this);
+    this.closeMenu = this.closeMenu.bind(this);
 	}
 	handleSubmit(e) {
     e.preventDefault();
@@ -43,7 +44,7 @@ class Search extends React.Component {
   }
 
   handleChange(event) {
-    this.setState({ searchVal: event.target.value });
+    this.setState({ searchVal: event.target.value,menuToggle: true });
     this.updateList()
   }
   logArr() {
@@ -60,6 +61,9 @@ class Search extends React.Component {
   	this.props.history.push("/player");
 
   }
+  closeMenu() {
+    this.setState({menuToggle: false});
+  }
   render() {
     const respVal = this.state.respVal;
     var rows = [];
@@ -72,59 +76,53 @@ class Search extends React.Component {
     });
     return (
 	      <>
-	        <Nav className="offset-1 mt-5">
-	          <form onSubmit={this.handleSubmit}> 
-	          
-	          <label htmlFor="search">Search</label>
-	          <button
-	            type="button"
-	            onClick={this.logArr}
-	            style={{ marginLeft: 1 + "em" }}
-	          >
-	            Print
-	          </button>
-	        </form>
-	        </Nav>
-	        <Container>
-	          <Row>
-	            <Col>
-	            	
-	            	
-	            </Col>
-	          </Row>
-	          <Row>
-	          </Row>
-	          <Row>
-	            <div className="col-8 offset-2">
-	           		<Col>
-	          	<input
-	            type="search"
-	            placeholder="Search..."
-	            id="search"
-	            value={this.state.searchVal}
-	            onChange={this.handleChange}
-	            onSubmit={this.handleSubmit}
-	          	className="col-4"
-	          	/>
-	          	<Dropdown isOpen={true}>
-	          	<DropdownToggle className="d-none" />
-	          	  <DropdownMenu className="col-4" style={{position: "realtive"}}> 	
-	          	   	{rows}
-			      </DropdownMenu>
-		       	</Dropdown>
-		       </Col>
-	          <button
-	            type="button"
-	            onClick={(e) => {
-	              this.handleSubmit(e);
-	            }}
-	            className= "m-1 search-button"
-	          >
-	            Search
-	          </button>
-	            </div>
+            <Container>
+	        <Row>
+	          <Col xs="2">
+              <label htmlFor="search">Search</label>
+              </Col>
+	          <Col xs="8">
+                <form onSubmit={this.handleSubmit} >
+			       	<input
+			         type="search"
+			         placeholder="Search..."
+			            id="search"
+			            value={this.state.searchVal}
+			            onChange={this.handleChange}
+			            onSubmit={this.handleSubmit}
+			          	className="col-12"
+			          	/>
+                </form>
+			          	<Dropdown isOpen={this.state.menuToggle}>
+			          	<DropdownToggle className="d-none" />
+			          	  <DropdownMenu className="col-12" style={{position: "realtive"}}> 	
+			          	   	{rows}
+					      </DropdownMenu>
+				       	</Dropdown>
+		       		</Col>
+	          		<Col xs={{size: 2}} >
+	          		<button
+		            	type="button"
+		            	onClick={(e) => {
+		              		this.handleSubmit(e);
+		            	}}
+		            	className= "m-1 search-button"
+	          		>
+	            		Search
+	          		</button>
+	          		</Col>
+	            
 	          </Row>
 	        </Container>
+            <div width="100%" onClick={this.closeMenu}>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+            </div>
 
 	      </>
     	);

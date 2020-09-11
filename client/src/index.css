@@ -1,3 +1,8 @@
 .search-button{
-	float: right;
+	/*float: right;*/
+
+}
+
+#root{
+	margin-top: 10px;
 }
