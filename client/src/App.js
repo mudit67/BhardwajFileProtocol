@@ -1,6 +1,7 @@
 import React from "react";
 import { Nav, Container, Col, Row } from "reactstrap";
 import Arr from "./components/arr.js";
+import config from "./config.json";
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -14,6 +15,7 @@ class App extends React.Component {
     this.logArr = this.logArr.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.updateList = this.updateList.bind(this);
+    this.currentBackend = config.url
   }
   handleSubmit(e) {
     debugger
@@ -25,7 +27,7 @@ class App extends React.Component {
     // this is debounced update list
     clearTimeout(this.debounceTimeout);
     this.debounceTimeout = setTimeout(() => {
-      fetch("http://localhost:8000/search?q=" + this.state.searchVal)
+      fetch(this.currentBackend+ "/search?q=" + this.state.searchVal)
         .then((response) => response.json())
         .then((data) => {
           console.log(data);
