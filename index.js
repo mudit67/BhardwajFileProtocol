@@ -1,4 +1,5 @@
 const express = require("express");
+const jobs = require("./backendjobs")
 const app = express();
 const fs = require("fs");
 app.use("/", express.static("./client/build/"));
@@ -41,3 +42,5 @@ app.get("/list.js", (req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.send(JSON.stringify(filesArr));
 });
+
+

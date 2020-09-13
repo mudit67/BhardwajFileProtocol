@@ -1,4 +1,5 @@
 import React from "react";
+
 import { Switch, Redirect, Route, BrowserRouter } from "react-router-dom";
 import Search from "./components/search.js";
 import VidComponent from "./components/VidComponent.js";
@@ -11,15 +12,10 @@ class App extends React.Component {
       redirect: false,
       menuToggle: false
     };
-  this.closeMenu = this.closeMenu.bind(this);
-  }
-  closeMenu() {
-    this.setState({ menuToggle: false });
   }
   render() {
     return (
       <>
-        
         <BrowserRouter>
           <div>
             <Search
