@@ -1,8 +1,10 @@
+// this handles all the videos 
 import React from 'react';
 import {Player} from 'video-react';
 
 const VidComponent = (props) => {
 	return(
+		// main player 
 		<div className="container">
 			<div className="row" >
 				<div className="col-6 offset-2">

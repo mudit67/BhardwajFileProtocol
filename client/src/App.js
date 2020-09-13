@@ -1,9 +1,9 @@
 import React from "react";
-import {Switch, Redirect, Route,BrowserRouter} from "react-router-dom";
+import { Switch, Redirect, Route, BrowserRouter } from "react-router-dom";
 // import { Nav, Container, Col, Row } from "reactstrap";
 // import Arr from "./components/arr.js";
-import Search from './components/search.js';
-import VidComponent from './components/VidComponent.js';
+import Search from "./components/search.js";
+import VidComponent from "./components/VidComponent.js";
 
 class App extends React.Component {
   constructor(props) {
@@ -13,7 +13,7 @@ class App extends React.Component {
       // respVal: [],
       // serResArr: [],
       vidName: null,
-      redirect: false
+      redirect: false,
     };
     // this.debounceTimeout =0
     // this.handleChange = this.handleChange.bind(this);
@@ -37,7 +37,7 @@ class App extends React.Component {
   // }
 
   // updateList(){
-  //   // this is debounced update list 
+  //   // this is debounced update list
   //   clearTimeout(this.debounceTimeout)
   //   this.debounceTimeout = setTimeout(()=>{
   //     fetch("http://localhost:8000/search?q=" + this.state.searchVal)
@@ -45,7 +45,7 @@ class App extends React.Component {
   //     .then((data) => {
   //       console.log(data);
   //       this.setState({ respVal: data });
-  //     });  
+  //     });
   //   }, 1000 /*this the wait interval before sending call to backend*/)
   // }
 
@@ -86,7 +86,7 @@ class App extends React.Component {
   //   return (
   //     <>
   //       <Nav className="offset-1 mt-5">
-  //         <form onSubmit={this.handleSubmit}> 
+  //         <form onSubmit={this.handleSubmit}>
   //         <label htmlFor="search">Search</label>
   //         <input
   //           type="search"
@@ -134,20 +134,28 @@ class App extends React.Component {
   //   );
   // }
   render() {
-    return(
-      <BrowserRouter>
-        <div>
-          <Switch>
-            
-              <Route path="/player" component={() => <VidComponent srcName={this.state.vidName}/>}/>
-              <Route path='/search' component={() => <Search parentCallback = {(callbacksrc) => {this.setState({vidName: callbacksrc, redirect:true}); console.log(this.state.vidName);}  }/> }/>
-              <Redirect to='/search'/>
-          </Switch>
-        </div>
-      </BrowserRouter>
-      
+    return (
+      <>
+        <Search
+          parentCallback={(callbacksrc) => {
+            this.setState({ vidName: callbacksrc, redirect: true });
+            console.log(this.state.vidName);
+          }}
+        />
+        <BrowserRouter>
+          <div>
+            <Switch>
+              <Route
+                path="/player"
+                component={() => <VidComponent srcName={this.state.vidName} />}
+              />
+              <Redirect to="/" />
+            </Switch>
+          </div>
+        </BrowserRouter>
+      </>
     );
-  };
+  }
 }
 
 export default App;

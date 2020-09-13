@@ -32,10 +32,12 @@ app.get("/search", function (req, res) {
 });
 
 app.get("/printarr", (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
   res.send(JSON.stringify({ filesJson }));
   console.log(JSON.stringify({ filesJson }));
 });
 
 app.get("/list.js", (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
   res.send(JSON.stringify(filesArr));
 });
