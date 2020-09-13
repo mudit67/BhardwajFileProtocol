@@ -1,4 +1,5 @@
 import React from "react";
+import config from "../config.json"
 import {
   Container,
   Col,
@@ -21,7 +22,11 @@ class Search extends React.Component {
 
     // CONSTANTS
     this.DEBOUNCETIME = 400; /*this the wait interval before sending call to backend*/
-
+    if (window.location.host.match("localhost")) {
+      this.backendUrl = config.local
+    }else{
+      this.backendUrl = config.url
+    }
     this.debounceTimeout = 0;
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -43,7 +48,7 @@ class Search extends React.Component {
   updateList() {
     // this is debounced update list
     this.debounceTimeout = setTimeout(() => {
-        fetch("http://localhost:8000/search?q=" + this.state.searchVal)
+        fetch( this.backendUrl + "/search?q=" + this.state.searchVal)
         .then((response) => response.json())
         .then((data) => {
               // console.log(data);
