@@ -24,7 +24,6 @@ class Search extends React.Component {
 
     this.debounceTimeout = 0;
     this.handleChange = this.handleChange.bind(this);
-    this.logArr = this.logArr.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.updateList = this.updateList.bind(this);
     this.closeMenu = this.closeMenu.bind(this);
@@ -43,34 +42,30 @@ class Search extends React.Component {
 
   updateList() {
     // this is debounced update list
-    clearTimeout(this.debounceTimeout);
     this.debounceTimeout = setTimeout(() => {
-      fetch("http://localhost:8000/search?q=" + this.state.searchVal)
+        fetch("http://localhost:8000/search?q=" + this.state.searchVal)
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
-          this.setState({ respVal: data });
+              // console.log(data);
+              this.setState({ respVal: data });
         });
     }, this.DEBOUNCETIME);
   }
 
   handleChange(event) {
     this.setState({ searchVal: event.target.value, menuToggle: true });
+    // console.log(event.target.value);
     this.updateList();
-  }
-  logArr() {
-    fetch("http://localhost:8000/printarr")
-      .then((response) => response.json())
-      .then((data) => {
-        let dataArr = Object.entries(data);
-        this.setState({ serResArr: dataArr[0][1] });
-        console.log("state = " + this.state.serResArr);
-      });
+    if(event.target.value===""){
+        this.setState({menuToggle: false});
+    }
   }
   redirectToPlayer(videoName) {
     this.props.parentCallback(videoName.substring(0, videoName.length - 4));
     this.props.history.push("/player");
+    this.setState({ menuToggle: false });
   }
+  
   closeMenu() {
     this.setState({ menuToggle: false });
   }
@@ -78,6 +73,8 @@ class Search extends React.Component {
     const respVal = this.state.respVal;
     var rows = [];
     rows = respVal.map((Val, index) => {
+    if(this.state.searchVal!=null){
+
       return (
         <DropdownItem
           key={index}
@@ -87,7 +84,11 @@ class Search extends React.Component {
         >
           {Val.substring(0, Val.length - 4)}
         </DropdownItem>
-      );
+      );    
+    }
+    else{
+        return(<div/>);
+      }
     });
     return (
       <>
@@ -97,18 +98,17 @@ class Search extends React.Component {
               <label htmlFor="search">Search</label>
             </Col>
             <Col xs="8">
-              <form onSubmit={this.handleSubmit}>
+              <form>
                 <input
                   type="search"
                   placeholder="Search..."
                   id="search"
-                  value={this.state.searchVal}
+                  value={this.state.searchVal || ""}
                   onChange={this.handleChange}
-                  onSubmit={this.handleSubmit}
                   className="col-12"
                 />
               </form>
-              <Dropdown isOpen={this.state.menuToggle}>
+              <Dropdown isOpen={this.state.menuToggle} toggle={()=> {return(this.state.menuToggle);}} >
                 <DropdownToggle className="d-none" />
                 <DropdownMenu
                   className="col-12"
@@ -122,7 +122,7 @@ class Search extends React.Component {
               <button
                 type="button"
                 onClick={(e) => {
-                  this.handleSubmit(e);
+                  
                 }}
                 className="m-1 search-button"
               >
@@ -131,18 +131,9 @@ class Search extends React.Component {
             </Col>
           </Row>
         </Container>
-        <div width="100%" onClick={this.closeMenu}>
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-        </div>
       </>
     );
   }
 }
 
-export default Search;
+export default withRouter(Search);
