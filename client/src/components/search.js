@@ -33,16 +33,12 @@ class Search extends React.Component {
     this.updateList = this.updateList.bind(this);
     this.closeMenu = this.closeMenu.bind(this);
   }
-  handleSubmit(e) {
-    e.preventDefault();
-    //this.sendRequest();
-    if (this.state.searchVal + ".mp4" === this.state.respVal[0]) {
-      this.props.parentCallback(this.state.searchVal);
-      this.props.history.push("/player");
-      console.log(this.state.vidName);
-    }
-    console.log(this.state.respVal[0]);
-    console.log(this.state.searchVal + ".mp4");
+  handleSubmit(event) {
+    event.preventDefault();
+    // console.log(event);
+    this.setState({menuToggle: false});
+    this.props.searchResponseCallback(this.state.respVal);
+    this.props.history.push("/search/" + this.state.searchVal);
   }
 
   updateList() {
@@ -75,25 +71,20 @@ class Search extends React.Component {
     this.setState({ menuToggle: false });
   }
   render() {
-    const respVal = this.state.respVal;
+    var respVal = this.state.respVal;
+    respVal = (respVal.slice(0,8));
     var rows = [];
     rows = respVal.map((Val, index) => {
-    if(this.state.searchVal!=null){
-
-      return (
-        <DropdownItem
-          key={index}
-          type="button"
-          className="btn"
-          onClick={this.redirectToPlayer.bind(this, Val)}
-        >
-          {Val.substring(0, Val.length - 4)}
-        </DropdownItem>
-      );    
-    }
-    else{
-        return(<div/>);
-      }
+        return (
+            <DropdownItem
+                key={index}
+                type="button"
+                className="btn"
+                onClick={this.redirectToPlayer.bind(this, Val)}
+                >
+                    {Val.substring(0, Val.length - 4)}
+            </DropdownItem>
+        );
     });
     return (
       <>
@@ -103,7 +94,7 @@ class Search extends React.Component {
               <label htmlFor="search">Search</label>
             </Col>
             <Col xs="8">
-              <form>
+              <form onSubmit={this.handleSubmit} autocomplete="off">
                 <input
                   type="search"
                   placeholder="Search..."
@@ -126,9 +117,7 @@ class Search extends React.Component {
             <Col xs={{ size: 2 }}>
               <button
                 type="button"
-                onClick={(e) => {
-                  
-                }}
+                onClick={this.handleSubmit}
                 className="m-1 search-button"
               >
                 Search
