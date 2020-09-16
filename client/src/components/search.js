@@ -4,10 +4,11 @@ import {
   Container,
   Col,
   Row,
-  Dropdown,
+  UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
+  NavLink
 } from "reactstrap";
 import { withRouter } from "react-router-dom";
 
@@ -91,10 +92,10 @@ class Search extends React.Component {
         <Container>
           <Row>
             <Col xs="2">
-              <label htmlFor="search">Search</label>
+              <NavLink href="/home">Home</NavLink>
             </Col>
             <Col xs="8">
-              <form onSubmit={this.handleSubmit} autocomplete="off">
+              <form onSubmit={this.handleSubmit} autoComplete="off">
                 <input
                   type="search"
                   placeholder="Search..."
@@ -104,7 +105,7 @@ class Search extends React.Component {
                   className="col-12"
                 />
               </form>
-              <Dropdown isOpen={this.state.menuToggle} toggle={()=> {return(this.state.menuToggle);}} >
+              <UncontrolledDropdown isOpen={this.state.menuToggle} toggle={()=> {return(this.state.menuToggle);}} >
                 <DropdownToggle className="d-none" />
                 <DropdownMenu
                   className="col-12"
@@ -112,7 +113,7 @@ class Search extends React.Component {
                 >
                   {rows}
                 </DropdownMenu>
-              </Dropdown>
+              </UncontrolledDropdown>
             </Col>
             <Col xs={{ size: 2 }}>
               <button

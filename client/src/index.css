@@ -6,3 +6,30 @@
 #root{
 	margin-top: 10px;
 }
+
+.carousel{
+	width: 100%;
+	background-color: teal;
+}
+
+/*.carousel-control-next, .carousel-control-prev{
+	width: 7%;
+}*/
+
+.Carousel-img{
+	margin-left: 3%;
+	margin-top: 2%;
+	margin-bottom: 2%;
+}
+
+.carousel-caption {
+	top: 15px;
+	left: 0;
+	bottom: 100%;
+	width: 40%;
+	margin-left: 25%
+}
+
+/*.carousel-control-prev{
+	overflow: visible;
+}*/

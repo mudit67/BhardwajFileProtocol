@@ -1,9 +1,10 @@
 import React from "react";
-
+// import panda from './../../public/panda.jpeg';
 import { Switch, Redirect, Route, BrowserRouter } from "react-router-dom";
 import Search from "./components/search.js";
 import VidComponent from "./components/VidComponent.js";
 import SearchResult from "./components/searchResult.js";
+import HomeComponent from "./components/HomeComponent.js";
 
 class App extends React.Component {
   constructor(props) {
@@ -58,7 +59,14 @@ class App extends React.Component {
                   
                 />
 
-              <Redirect to="/"/>
+	    	<Route 
+	    	  path="/home"
+	    	  component={
+		  	() => <HomeComponent/>
+			
+		  }
+		/>
+              <Redirect to="/home"/>
               </Switch>
             </div>
           </div>
