@@ -47,22 +47,20 @@ const HomeComponent = (props) => {
 	return(
 		<div className="container">
 			<div className="row">
-			This is the HomeComponent
-			</div>
-			<div className="row">
 				<Carousel
 					activeIndex={activeIndex}
-      				next={next}
-				    previous={previous}
+      		next={next}
+				  previous={previous}
+          interval="3000"
 				>
-				<CarouselIndicators 
-					items={Items} 
-					activeIndex={activeIndex} 
-					onClickHandler={goToIndex} 
-				/>
-				{slides}
-				<CarouselControl direction="prev" directionText="Previous" onClickHandler={previous} />
-      			<CarouselControl direction="next" directionText="Next" onClickHandler={next} />
+  				<CarouselIndicators
+  					items={Items}
+  					activeIndex={activeIndex}
+  					onClickHandler={goToIndex}
+  				/>
+  				{slides}
+  				<CarouselControl direction="prev" directionText="Previous" onClickHandler={previous} />
+        	<CarouselControl direction="next" directionText="Next" onClickHandler={next} />
 				</Carousel>
 			</div>
 		</div>

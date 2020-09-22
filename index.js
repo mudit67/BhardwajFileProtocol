@@ -16,7 +16,7 @@ setInterval(() => {
     if (err) {
       console.log("Unable to Read the Directory " + err);
     }
-	  
+
     filesArr = files;
   });
 }, 2000);
@@ -29,6 +29,7 @@ app.get("/search", function (req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   var regex = new RegExp(req.query.q, "i");
   var matchedFiles = filesArr.filter((obj) => obj.match(regex));
+  matchedFiles = matchedFiles.slice(0,8);
   res.send(matchedFiles);
 });
 
@@ -43,4 +44,10 @@ app.get("/list.js", (req, res) => {
   res.send(JSON.stringify(filesArr));
 });
 
-
+app.get('/searchall', (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  var regex = new RegExp(req.query.q, "i");
+  console.log(regex);
+  var matchedFiles = filesArr.filter((obj) => obj.substring(0,obj.length-4).match(regex));
+  res.send(matchedFiles);
+})

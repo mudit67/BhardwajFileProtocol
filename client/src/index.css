@@ -30,6 +30,24 @@
 	margin-left: 25%
 }
 
-/*.carousel-control-prev{
-	overflow: visible;
-}*/
+.frame-container{
+	position: relative;
+	overflow: hidden;
+	padding-top: 56.25%;
+}
+
+.playerframe{
+	position: absolute;
+ 	top: 0;
+ 	left: 0;
+ 	border: 0;
+ 	width: 100%;
+ 	height: 100%;
+	border: none;
+	background-color: black;
+	color: white;
+}
+
+.row form{
+	margin: 0;
+}
