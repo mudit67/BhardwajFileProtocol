@@ -18,7 +18,7 @@ async function sendRequest(requestUrl) {
 }
 
 async function commitNewUrl(newUrl) {
-  let configPayload = JSON.stringify({ url: newUrl , local:"https://localhost:8000"});
+  let configPayload = JSON.stringify({ url: newUrl , local:"http://localhost:8000"});
   fs.writeFileSync("./client/src/config.json", configPayload);
   try {
     const { stdout, stderr } = await exec(`./bashScripts/updateNewUrl.sh`);
@@ -42,6 +42,6 @@ setInterval(async () => {
       console.error("perhaps ngrok is not running");
     }
   } catch (e) {
-    console.error(e);
+    // console.error(e);
   }
 }, ngRok_connection_reset_interval);
