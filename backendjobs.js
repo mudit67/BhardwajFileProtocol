@@ -42,6 +42,6 @@ setInterval(async () => {
       console.error("perhaps ngrok is not running");
     }
   } catch (e) {
-    console.error(e);
+    // console.error(e);
   }
 }, ngRok_connection_reset_interval);

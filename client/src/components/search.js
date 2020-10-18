@@ -2,16 +2,19 @@ import React from "react";
 import config from "../config.json"
 import {
   Container,
-  Col,
   Row,
-  Dropdown,
+  UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
+  NavLink
 } from "reactstrap";
 import { withRouter } from "react-router-dom";
 
 class Search extends React.Component {
+  shouldComponentUpdate(nextProps, nextState){
+    return true;
+  }
   constructor(props) {
     super(props);
     this.state = {
@@ -36,9 +39,16 @@ class Search extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     // console.log(event);
-    this.setState({menuToggle: false});
+    this.props.menuToggleCallback(false);
     this.props.searchResponseCallback(this.state.respVal);
-    this.props.history.push("/search/" + this.state.searchVal);
+    var quer = this.state.searchVal.replace(' ','+');
+    // console.log(quer);
+    if(this.state.searchVal===""){
+        this.props.history.push("/search/ ");
+    }
+    else{
+      this.props.history.push("/search/" + quer);
+    }
   }
 
   updateList() {
@@ -56,23 +66,28 @@ class Search extends React.Component {
   handleChange(event) {
     this.setState({ searchVal: event.target.value, menuToggle: true });
     // console.log(event.target.value);
+    this.props.menuToggleCallback(true);
     this.updateList();
     if(event.target.value===""){
-        this.setState({menuToggle: false});
+        this.props.menuToggleCallback(false);
     }
   }
   redirectToPlayer(videoName) {
     this.props.parentCallback(videoName.substring(0, videoName.length - 4));
-    this.props.history.push("/player");
-    this.setState({ menuToggle: false });
+    this.props.history.push("/player/" + (videoName.substring(0, videoName.length - 4)) );
+    this.props.menuToggleCallback(false);
   }
-  
+
   closeMenu() {
-    this.setState({ menuToggle: false });
+    this.props.menuToggleCallback(false);
+  }
+  redirectToPage(page){
+    this.props.history.push("/" + page);
+    this.props.menuToggleCallback(false);
   }
   render() {
     var respVal = this.state.respVal;
-    respVal = (respVal.slice(0,8));
+    // respVal = (respVal.slice(0,8));
     var rows = [];
     rows = respVal.map((Val, index) => {
         return (
@@ -90,11 +105,11 @@ class Search extends React.Component {
       <>
         <Container>
           <Row>
-            <Col xs="2">
-              <label htmlFor="search">Search</label>
-            </Col>
-            <Col xs="8">
-              <form onSubmit={this.handleSubmit} autocomplete="off">
+            <div className="col-2 pl-0">
+              <NavLink type="button" onClick={() => {this.redirectToPage("home")}}>Home</NavLink>
+            </div>
+            <div className="col-7">
+              <form className="row" onSubmit={this.handleSubmit} autoComplete="off">
                 <input
                   type="search"
                   placeholder="Search..."
@@ -104,7 +119,7 @@ class Search extends React.Component {
                   className="col-12"
                 />
               </form>
-              <Dropdown isOpen={this.state.menuToggle} toggle={()=> {return(this.state.menuToggle);}} >
+              <UncontrolledDropdown isOpen={this.props.menuToggle} toggle={()=> {return(this.props.menuToggle);}} >
                 <DropdownToggle className="d-none" />
                 <DropdownMenu
                   className="col-12"
@@ -112,9 +127,9 @@ class Search extends React.Component {
                 >
                   {rows}
                 </DropdownMenu>
-              </Dropdown>
-            </Col>
-            <Col xs={{ size: 2 }}>
+              </UncontrolledDropdown>
+            </div>
+            <div className="col-2 pl-0">
               <button
                 type="button"
                 onClick={this.handleSubmit}
@@ -122,7 +137,7 @@ class Search extends React.Component {
               >
                 Search
               </button>
-            </Col>
+            </div>
           </Row>
         </Container>
       </>
