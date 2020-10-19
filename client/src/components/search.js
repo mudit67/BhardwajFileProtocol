@@ -6,10 +6,9 @@ import {
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem,
   NavLink
 } from "reactstrap";
-import { withRouter } from "react-router-dom";
+import { withRouter,Link} from "react-router-dom";
 
 class Search extends React.Component {
   shouldComponentUpdate(nextProps, nextState){
@@ -30,6 +29,8 @@ class Search extends React.Component {
     }else{
       this.backendUrl = config.url
     }
+    // this.redirectToPlayer = this.redirectToPlayer.bind(this);
+    this.redirectToPage = this.redirectToPage.bind(this);
     this.debounceTimeout = 0;
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -40,7 +41,7 @@ class Search extends React.Component {
     event.preventDefault();
     // console.log(event);
     this.props.menuToggleCallback(false);
-    this.props.searchResponseCallback(this.state.respVal);
+    // this.props.searchResponseCallback(this.state.respVal);
     var quer = this.state.searchVal.replace(' ','+');
     // console.log(quer);
     if(this.state.searchVal===""){
@@ -52,12 +53,10 @@ class Search extends React.Component {
   }
 
   updateList() {
-    // this is debounced update list
     this.debounceTimeout = setTimeout(() => {
         fetch( this.backendUrl + "/search?q=" + this.state.searchVal)
         .then((response) => response.json())
         .then((data) => {
-              // console.log(data);
               this.setState({ respVal: data });
         });
     }, this.DEBOUNCETIME);
@@ -65,40 +64,35 @@ class Search extends React.Component {
 
   handleChange(event) {
     this.setState({ searchVal: event.target.value, menuToggle: true });
-    // console.log(event.target.value);
     this.props.menuToggleCallback(true);
     this.updateList();
     if(event.target.value===""){
         this.props.menuToggleCallback(false);
     }
   }
-  redirectToPlayer(videoName) {
-    this.props.parentCallback(videoName.substring(0, videoName.length - 4));
-    this.props.history.push("/player/" + (videoName.substring(0, videoName.length - 4)) );
-    this.props.menuToggleCallback(false);
-  }
 
   closeMenu() {
     this.props.menuToggleCallback(false);
   }
   redirectToPage(page){
-    this.props.history.push("/" + page);
-    this.props.menuToggleCallback(false);
+    this.props.history.push(page);
+    this.props.parentCallback(page);
+    // this.forceUpdate();
+    this.closeMenu();
   }
   render() {
     var respVal = this.state.respVal;
-    // respVal = (respVal.slice(0,8));
     var rows = [];
     rows = respVal.map((Val, index) => {
         return (
-            <DropdownItem
-                key={index}
-                type="button"
-                className="btn"
-                onClick={this.redirectToPlayer.bind(this, Val)}
-                >
-                    {Val.substring(0, Val.length - 4)}
-            </DropdownItem>
+                <NavLink
+                  type="button"
+                  onClick={(e) => {e.preventDefault(); this.redirectToPage(`/player/${Val.substring(0, Val.length - 4)}`)}}
+                  to = {`/player/${Val.substring(0, Val.length - 4)}`}
+                  className="row"
+                  key={index}>
+                  {Val.substring(0, Val.length - 4)}
+                </NavLink>
         );
     });
     return (
@@ -106,7 +100,11 @@ class Search extends React.Component {
         <Container>
           <Row>
             <div className="col-2 pl-0">
-              <NavLink type="button" onClick={() => {this.redirectToPage("home")}}>Home</NavLink>
+              <NavLink
+                type="button"
+                onClick={() => {this.redirectToPage("/home")}}>
+                Home
+              </NavLink>
             </div>
             <div className="col-7">
               <form className="row" onSubmit={this.handleSubmit} autoComplete="off">

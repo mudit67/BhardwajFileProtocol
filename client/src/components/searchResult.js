@@ -25,22 +25,26 @@ import { withRouter } from "react-router-dom";
 //
 // }
 
-class SearchResult extends React.Component {
+class SearchResult extends React.PureComponent {
 	constructor(props){
-	  super(props);
-	  this.state={
+		super(props);
+		this.state={
 			respVal: []
 		};
-	}
-	shouldComponentUpdate(nextProps, nextState){
-	  if(nextProps.searchVal!==this.props.searchVal){
-			return(true);
-		}
-			else{
-				return(false);
-			}
+		this.getData = this.getData.bind(this);
 	}
 	componentDidMount(){
+		this.getData();
+	}
+	getSnapshotBeforeUpdate(prevProps, prevState){
+		if(prevProps.searchVal!==this.props.searchVal){
+			this.getData();
+		}
+		return(null);
+
+	}
+	getData(){
+		// console.log("get data");
 		fetch ('http://localhost:8000/searchall?q=' + this.props.searchVal)
 		.then((response) => response.json())
 		.then((data) => {
@@ -50,43 +54,18 @@ class SearchResult extends React.Component {
 					// console.log(this.state.respVal + "\n\nrespVal");
 		});
 	}
-	// componentDidUpdate(prevProps, prevState, snapshot){
-	// 	if(prevProps.searchVal!==this.props.searchVal){
-	// 		fetch ('http://localhost:8000/searchall?q=' + this.props.searchVal)
-	// 		.then((response) => response.json())
-	// 		.then((data) => {
-	// 					// console.log(data);
-	// 					if(this.state.respVal!==data){
-	// 						this.setState({ respVal: data });
-	// 						this.forceUpdate();
-	// 					}
-	// 		});
-	// 	}
-	// }
-
 	render(){
-		var searchVal = this.props;
-		const searchResponse = (searchVal) => {
-			fetch ('http://localhost:8000/searchall?q=' + this.props.searchVal)
-			.then((response) => response.json())
-			.then((data) => {
-							data.map((Val,index) => {
-								return(
-									<div key={index} >
-										{Val}
-									</div>
-								);
-							})
+		// console.log("render is invoked\n\n" + this.state.respVal);
+		var searchResponse = [];
+		searchResponse = this.state.respVal.map((Val,index) => {
+				// console.log(Val);
+				return(
+					<div key={index} >
+						{Val.substring(0,Val.length - 4)}
+					</div>
+				);
+
 			});
-		}
-		console.log("render is invoked");
-		// const searchResult = searchResponse.map((Val,index) => {
-		// 	return(
-		// 		<div key={index} >
-		// 			{Val}
-		// 		</div>
-		// 	);
-		// });
 	  return(
 	    <div className="container">
 				{searchResponse}

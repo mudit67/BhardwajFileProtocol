@@ -5,7 +5,7 @@ import VidComponent from "./components/VidComponent.js";
 import SearchResult from "./components/searchResult.js";
 import HomeComponent from "./components/HomeComponent.js";
 import config from "./config.json";
-class App extends React.Component {
+class App extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -25,30 +25,24 @@ class App extends React.Component {
         <BrowserRouter>
           <div>
             <Search
-              parentCallback={(callbacksrc) => {
-                  this.setState({ vidName: callbacksrc});
-                  // console.log(this.state.vidName);
-                }
-              }
-              searchResponseCallback={(SearchResp) => {
-                  this.setState({searchResponse: SearchResp});
+              parentCallback={ (callbacksrc) => {
+                  this.setState({ shouldRender: callbacksrc});
                 }
               }
               menuToggleCallback={(toggle) => {
-                if(toggle!==this.state.menuToggle){
-                  this.setState({menuToggle: toggle});
+                  if(toggle!==this.state.menuToggle){
+                    this.setState({menuToggle: toggle});
+                  }
+                  // console.log(this.state.menu);
                 }
-                // console.log(this.state.menu);
-              }}
+              }
               menuToggle={this.state.menuToggle}
             />
           <MainContent
             maincontentCallback = {(toggle) => {
                 this.setState({menuToggle: toggle});
             }}
-            vidName = {this.state.vidName}
-            menuToggle={this.state.menuToggle}
-            searchResponse={this.state.searchResponse}
+            shouldRender={this.state.shouldRender}
           />
           </div>
         </BrowserRouter>
@@ -62,15 +56,16 @@ class App extends React.Component {
 // MainContent
 //
 class MainContent extends React.Component{
-  shouldComponentUpdate(nextProps, nextState){
-    // if(this.state.shouldRender){
-    if(this.props.vidName!==nextProps.vidName){
-      return(true);
-    }
-      return(false);
-    // }
-    // else {return(true);}
-  }
+  // shouldComponentUpdate(nextProps,nextState){
+  //   if(nextProps.shouldRender!==this.props.shouldRender){
+  //     console.log(true);
+  //     return(true);
+  //   }
+  //   else{
+  //     console.log(false);
+  //     return(false);
+  //   }
+  // }
   constructor(props){
     super(props);
     this.state = {
@@ -78,7 +73,6 @@ class MainContent extends React.Component{
       shouldRender: false
     };
     this.closeMenu = this.closeMenu.bind(this);
-    this.getData = this.getData.bind(this);
     if (window.location.host.match("localhost")) {
       this.backendUrl = config.local
     }else{
@@ -86,26 +80,18 @@ class MainContent extends React.Component{
     }
   }
   closeMenu() {
-    if(this.props.menuToggle){
       // this.this.setState({shouldRender=true});
       this.props.maincontentCallback(false);
     }
-  }
-  getData(params,callback) {
-    fetch( this.backendUrl + "/searchall?q=" + params)
-      .then((response) => response.json())
-      .then((data) => {
-            // console.log(data);
-            this.setState({ searchResponse: data });
-      });
-    callback();
-  }
   render(){
+    console.log(this.props.shouldRender);
     const Result=({match}) => {
+      console.log("result");
       var query = match.params.query.replace('+',' ');
       return( <SearchResult searchVal={query} />);
     };
     const videoPlayer =({match}) => {
+      console.log("videos");
       var videoName = match.params.videoname.replace('+', ' ');
       return(
         <VidComponent srcName={videoName}/>
@@ -115,7 +101,7 @@ class MainContent extends React.Component{
       <div onClick={this.closeMenu}>
           <Switch>
             <Route
-              path="/player/:video  name"
+              path="/player/:videoname"
               component=
                 {videoPlayer}
 
@@ -127,7 +113,7 @@ class MainContent extends React.Component{
               />
 
             <Route
-              path="/home"
+              exact path="/home"
               component={
                 () => <HomeComponent/>
               }

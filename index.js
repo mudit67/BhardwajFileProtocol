@@ -28,7 +28,7 @@ setInterval(() => {
 app.get("/search", function (req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   var regex = new RegExp(req.query.q, "i");
-  var matchedFiles = filesArr.filter((obj) => obj.match(regex));
+  var matchedFiles = filesArr.filter((obj) => obj.substring(0,obj.length-4).match(regex));
   matchedFiles = matchedFiles.slice(0,8);
   res.send(matchedFiles);
 });
