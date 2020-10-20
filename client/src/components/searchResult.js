@@ -1,30 +1,6 @@
 import React from 'react';
 import { withRouter } from "react-router-dom";
 
-// const redirectToPlayer = (props,videoName) => {
-// 	// props.history.push("/player/" + (videoName) );
-// 	debugger
-// 	console.log(this);
-// 	console.log(videoName);
-//
-// }
-//
-// const SearchResult = (props) => {
-// 	// console.log(props.response);
-//
-// 	var result = props.response.map((Val,index) => {
-// 		// debugger
-// 		var Val2 = Val.substring(0, Val.length - 4);
-// 		return(
-// 			<div key={index} className="row" onClick={redirectToPlayer.bind(props,Val2)}>
-// 				&nbsp;&nbsp;{Val2}
-// 			</div>
-// 		);
-// 	});
-// 	return(<div>{result}</div>);
-//
-// }
-
 class SearchResult extends React.PureComponent {
 	constructor(props){
 		super(props);
@@ -54,15 +30,26 @@ class SearchResult extends React.PureComponent {
 					// console.log(this.state.respVal + "\n\nrespVal");
 		});
 	}
+	redirectToPlayer(name,e){
+		e.preventDefault();
+		var page = `/player/${name}`
+    this.props.history.push(page);
+	}
 	render(){
 		// console.log("render is invoked\n\n" + this.state.respVal);
 		var searchResponse = [];
 		searchResponse = this.state.respVal.map((Val,index) => {
 				// console.log(Val);
 				return(
-					<div key={index} >
+					<a
+						className="row"
+						type="button"
+						href={`/player/${Val.substring(0,Val.length - 4)}`}
+						key={index}
+						onClick={(e) => {this.redirectToPlayer(Val.substring(0,Val.length - 4),e)}}
+						>
 						{Val.substring(0,Val.length - 4)}
-					</div>
+					</a>
 				);
 
 			});

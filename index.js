@@ -2,7 +2,8 @@ const express = require("express");
 const jobs = require("./backendjobs")
 const app = express();
 const fs = require("fs");
-app.use("/", express.static("./client/build/"));
+const path = require('path');
+app.use("/", express.static(path.join(__dirname,'client','build')));
 app.use("/files", express.static("./files"));
 
 app.listen(8000, () => {

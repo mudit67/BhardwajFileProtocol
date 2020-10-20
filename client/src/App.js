@@ -5,7 +5,7 @@ import VidComponent from "./components/VidComponent.js";
 import SearchResult from "./components/searchResult.js";
 import HomeComponent from "./components/HomeComponent.js";
 import config from "./config.json";
-class App extends React.PureComponent {
+class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -44,6 +44,7 @@ class App extends React.PureComponent {
             }}
             shouldRender={this.state.shouldRender}
           />
+
           </div>
         </BrowserRouter>
       </>
@@ -56,16 +57,16 @@ class App extends React.PureComponent {
 // MainContent
 //
 class MainContent extends React.Component{
-  // shouldComponentUpdate(nextProps,nextState){
-  //   if(nextProps.shouldRender!==this.props.shouldRender){
-  //     console.log(true);
-  //     return(true);
-  //   }
-  //   else{
-  //     console.log(false);
-  //     return(false);
-  //   }
-  // }
+  shouldComponentUpdate(nextProps,nextState){
+    if(nextProps.shouldRender!==this.props.shouldRender){
+      console.log(true);
+      return(true);
+    }
+    else{
+      console.log(false);
+      return(false);
+    }
+  }
   constructor(props){
     super(props);
     this.state = {
@@ -84,9 +85,9 @@ class MainContent extends React.Component{
       this.props.maincontentCallback(false);
     }
   render(){
-    console.log(this.props.shouldRender);
+    // console.log(this.props.shouldRender);
     const Result=({match}) => {
-      console.log("result");
+      // console.log("result");
       var query = match.params.query.replace('+',' ');
       return( <SearchResult searchVal={query} />);
     };

@@ -8,7 +8,7 @@ import {
   DropdownMenu,
   NavLink
 } from "reactstrap";
-import { withRouter,Link} from "react-router-dom";
+import { withRouter} from "react-router-dom";
 
 class Search extends React.Component {
   shouldComponentUpdate(nextProps, nextState){
@@ -88,7 +88,7 @@ class Search extends React.Component {
                 <NavLink
                   type="button"
                   onClick={(e) => {e.preventDefault(); this.redirectToPage(`/player/${Val.substring(0, Val.length - 4)}`)}}
-                  to = {`/player/${Val.substring(0, Val.length - 4)}`}
+                  href = {`/player/${Val.substring(0, Val.length - 4)}`}
                   className="row"
                   key={index}>
                   {Val.substring(0, Val.length - 4)}

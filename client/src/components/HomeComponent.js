@@ -7,8 +7,7 @@ import {Carousel,
 	}
 	 from 'reactstrap';
 import Items from './CarouselItems.js';
-
-
+import {withRouter} from 'react-router-dom';
 
 const HomeComponent = (props) => {
 	const [activeIndex, setActiveIndex] = useState(0);
@@ -30,7 +29,11 @@ const HomeComponent = (props) => {
 	    if (animating) return;
 	    setActiveIndex(newIndex);
 	}
-
+  const ClickHandler = (name,e) => {
+    e.preventDefault();
+    var page = `/player/${name}`
+    props.history.push(page);
+  };
 	const slides = Items.map((item) => {
 		return(
 			<CarouselItem
@@ -39,8 +42,21 @@ const HomeComponent = (props) => {
 	        key={item.caption}
 	        className="row"
 	      >
-	        <img className="Carousel-img col-4" src={item.src} alt={item.altText} />
-	        <CarouselCaption className="col-5" captionHeader={item.caption} captionText="" />
+          <a
+            type="button"
+            href={`/player/${item.altText}`}
+            onClick={(e) => {ClickHandler(item.altText,e)} }
+          >
+            <CarouselCaption className="offset-3" captionHeader={item.caption} captionText=""/>
+          </a>
+      <a
+        className="col-4 link-img"
+        type="button"
+        href={`/player/${item.altText}`}
+        onClick={(e) => {ClickHandler(item.altText,e)} }
+        >
+          <img className="Carousel-img" src={item.src} alt={item.altText}/>
+        </a>
 	      </CarouselItem>
 		);
 	});
@@ -51,7 +67,7 @@ const HomeComponent = (props) => {
 					activeIndex={activeIndex}
       		next={next}
 				  previous={previous}
-          interval="3000"
+          interval={3000}
 				>
   				<CarouselIndicators
   					items={Items}
@@ -67,5 +83,5 @@ const HomeComponent = (props) => {
 	);
 }
 
-export default HomeComponent;
+export default withRouter(HomeComponent);
 // captionText={item.caption}

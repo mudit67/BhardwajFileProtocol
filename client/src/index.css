@@ -20,6 +20,8 @@
 	margin-left: 3%;
 	margin-top: 2%;
 	margin-bottom: 2%;
+	min-height: 240px;
+	width: 100%
 }
 
 .carousel-caption {
@@ -27,7 +29,7 @@
 	left: 0;
 	bottom: 100%;
 	width: 40%;
-	margin-left: 25%
+
 }
 
 .frame-container{
@@ -50,4 +52,8 @@
 
 .row form{
 	margin: 0;
+}
+
+.link-img {
+	display: inline-block;
 }
