@@ -42,7 +42,7 @@ class SearchResult extends React.PureComponent {
 				// console.log(Val);
 				return(
 					<a
-						className="row"
+						className="row nav-button search-result ml-2 mb-1"
 						type="button"
 						href={`/player/${Val.substring(0,Val.length - 4)}`}
 						key={index}
@@ -54,7 +54,7 @@ class SearchResult extends React.PureComponent {
 
 			});
 	  return(
-	    <div className="container">
+	    <div>
 				{searchResponse}
 	    </div>
 	  )

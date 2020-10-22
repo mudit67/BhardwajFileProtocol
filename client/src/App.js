@@ -23,7 +23,7 @@ class App extends React.Component {
     return (
       <>
         <BrowserRouter>
-          <div>
+          <div className="page-wrapper">
             <Search
               parentCallback={ (callbacksrc) => {
                   this.setState({ shouldRender: callbacksrc});

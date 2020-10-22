@@ -1,7 +1,6 @@
 import React from "react";
 import config from "../config.json"
 import {
-  Container,
   Row,
   UncontrolledDropdown,
   DropdownToggle,
@@ -9,6 +8,8 @@ import {
   NavLink
 } from "reactstrap";
 import { withRouter} from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHome,faSearch } from '@fortawesome/free-solid-svg-icons'
 
 class Search extends React.Component {
   shouldComponentUpdate(nextProps, nextState){
@@ -42,12 +43,11 @@ class Search extends React.Component {
     // console.log(event);
     this.props.menuToggleCallback(false);
     // this.props.searchResponseCallback(this.state.respVal);
-    var quer = this.state.searchVal.replace(' ','+');
     // console.log(quer);
     if(this.state.searchVal===""){
-        this.props.history.push("/search/ ");
     }
-    else{
+    else if(this.state.searchVal){
+      var quer = this.state.searchVal.replace(' ','+');
       this.props.history.push("/search/" + quer);
     }
   }
@@ -89,7 +89,7 @@ class Search extends React.Component {
                   type="button"
                   onClick={(e) => {e.preventDefault(); this.redirectToPage(`/player/${Val.substring(0, Val.length - 4)}`)}}
                   href = {`/player/${Val.substring(0, Val.length - 4)}`}
-                  className="row"
+                  className="row nav-button ml-0 mr-0"
                   key={index}>
                   {Val.substring(0, Val.length - 4)}
                 </NavLink>
@@ -97,16 +97,17 @@ class Search extends React.Component {
     });
     return (
       <>
-        <Container>
-          <Row>
-            <div className="col-2 pl-0">
+          <Row className="align-items-center navbar-home">
               <NavLink
+                className="col-2 col-md-1 pl-2 pl-md-3 pr-0 pt-2 pb-2 d-flex home-button align-items-center"
                 type="button"
                 onClick={() => {this.redirectToPage("/home")}}>
-                Home
+                <div className="d-none d-md-block mr-md-2">
+                  Home
+                </div>
+                <FontAwesomeIcon icon={faHome} name={"home"} className="m-1" />
               </NavLink>
-            </div>
-            <div className="col-7">
+            <div className="col-7 pl-1 pl-md-2 pr-0">
               <form className="row" onSubmit={this.handleSubmit} autoComplete="off">
                 <input
                   type="search"
@@ -117,10 +118,10 @@ class Search extends React.Component {
                   className="col-12"
                 />
               </form>
-              <UncontrolledDropdown isOpen={this.props.menuToggle} toggle={()=> {return(this.props.menuToggle);}} >
+              <UncontrolledDropdown isOpen={this.props.menuToggle} toggle={()=> {return(this.props.menuToggle);}} className="pr-5">
                 <DropdownToggle className="d-none" />
                 <DropdownMenu
-                  className="col-12"
+                  className="col-12 search-suggestions-container pt-0"
                   style={{ position: "realtive" }}
                 >
                   {rows}
@@ -131,13 +132,12 @@ class Search extends React.Component {
               <button
                 type="button"
                 onClick={this.handleSubmit}
-                className="m-1 search-button"
+                className="nav-button"
               >
-                Search
+                <FontAwesomeIcon icon={faSearch} name={"search"}/>
               </button>
             </div>
           </Row>
-        </Container>
       </>
     );
   }

@@ -1,20 +1,12 @@
-.search-button{
-	/*float: right;*/
-
-}
 
 #root{
 	margin-top: 10px;
 }
 
 .carousel{
-	width: 100%;
-	background-color: teal;
+	margin-left: .1rem;
+	padding-right: 0;
 }
-
-/*.carousel-control-next, .carousel-control-prev{
-	width: 7%;
-}*/
 
 .Carousel-img{
 	margin-left: 3%;
@@ -56,4 +48,72 @@
 
 .link-img {
 	display: inline-block;
+}
+
+#search{
+	border-style: solid;
+	border-color: #303030;
+	background-color: #303030;
+	border-radius: 0.2rem;
+	color: white;
+	padding-top: 0.45rem;
+	padding-bottom: 0.45rem;
+	align-items:flex-start;
+	margin-left: .1rem;
+}
+.nav-button{
+	border-style: solid;
+	background-color: #303030;
+	border-color: #121212;
+	border-radius: 0.2rem;
+	color: white;
+	padding-right: 1rem;
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+	padding-left: 1rem;
+	border: 0.1rem;
+	border-style: solid;
+	border-color: transparent;
+	margin-left: 0.25rem;
+}
+.nav-button:hover{
+	color: white;
+	background-color: #606060;
+	text-decoration: none;
+}
+
+body {
+	background-color: #121212;
+}
+.home-button{
+	border-radius: 0.2rem;
+	border: 0.1rem;
+	border-style: solid;
+	text-align: center;
+	border-color: #121212;
+	color: white;
+	background-color: #303030;
+	margin-left: 1.5rem;
+
+}
+.home-button:hover{
+	color: white;
+	background-color: #606060;
+}
+.navbar-home{
+	margin-bottom: .5rem;
+	max-width: 100%;
+}
+.carousel{
+	background-color: #303030
+}
+.page-wrapper{
+	max-width: 100%;
+}
+.search-suggestions-container{
+	background-color: #303030;
+	min-width: 100.5%;
+}
+.search-result{
+	max-width:72.4%;
 }

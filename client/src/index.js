@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import './../public/panda.jpeg';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 // import "../node_modules/video-react/dist/video-react.css";
 import './index.css';

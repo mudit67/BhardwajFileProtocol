@@ -40,17 +40,18 @@ const HomeComponent = (props) => {
 	        onExiting={() => setAnimating(true)}
 	        onExited={() => setAnimating(false)}
 	        key={item.caption}
-	        className="row"
+	        className="row pr-0"
 	      >
           <a
+            className="d-none d-md-block"
             type="button"
             href={`/player/${item.altText}`}
             onClick={(e) => {ClickHandler(item.altText,e)} }
           >
-            <CarouselCaption className="offset-3" captionHeader={item.caption} captionText=""/>
+            <CarouselCaption className="offset-md-3" captionHeader={item.caption} captionText=""/>
           </a>
       <a
-        className="col-4 link-img"
+        className="col-12 pr-0 col-md-4 link-img"
         type="button"
         href={`/player/${item.altText}`}
         onClick={(e) => {ClickHandler(item.altText,e)} }
@@ -61,8 +62,7 @@ const HomeComponent = (props) => {
 		);
 	});
 	return(
-		<div className="container">
-			<div className="row">
+			<div className="ml-0 mr-0 ml-md-4 pl-md-1 pr-0 pl-0 col-md-8 pr-md-0">
 				<Carousel
 					activeIndex={activeIndex}
       		next={next}
@@ -79,7 +79,6 @@ const HomeComponent = (props) => {
         	<CarouselControl direction="next" directionText="Next" onClickHandler={next} />
 				</Carousel>
 			</div>
-		</div>
 	);
 }
 
