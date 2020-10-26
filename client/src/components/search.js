@@ -10,6 +10,7 @@ import {
 import { withRouter} from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHome,faSearch } from '@fortawesome/free-solid-svg-icons'
+import  axios from "axios";
 
 class Search extends React.Component {
   shouldComponentUpdate(nextProps, nextState){
@@ -37,6 +38,7 @@ class Search extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.updateList = this.updateList.bind(this);
     this.closeMenu = this.closeMenu.bind(this);
+    this.fileUpload = this.fileUpload.bind(this);
   }
   handleSubmit(event) {
     event.preventDefault();
@@ -60,6 +62,20 @@ class Search extends React.Component {
               this.setState({ respVal: data });
         });
     }, this.DEBOUNCETIME);
+  }
+
+  fileUpload(event) {
+    const data = new FormData();
+    data.append("file", event.target.files[0]);
+    axios
+      .post(this.backendUrl + "/uploadFile", data, config)
+      .then((response) => {
+        console.log(response)
+        alert(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   handleChange(event) {
@@ -117,6 +133,15 @@ class Search extends React.Component {
                   onChange={this.handleChange}
                   className="col-12"
                 />
+                <div class="form-group files">
+                  <label>Upload Your File </label>
+                  <input
+                    type="file"
+                    class="form-control"
+                    multiple=""
+                    onChange={this.fileUpload}
+                  />
+                </div>
               </form>
               <UncontrolledDropdown isOpen={this.props.menuToggle} toggle={()=> {return(this.props.menuToggle);}} className="pr-5">
                 <DropdownToggle className="d-none" />
