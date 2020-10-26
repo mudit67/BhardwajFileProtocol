@@ -1,6 +1,6 @@
 const express = require("express");
-const jobs = require("./backendjobs")
-var formidable = require('formidable');
+const jobs = require("./backendjobs");
+const formidable = require("formidable");
 const app = express();
 const fs = require("fs");
 app.use("/", express.static("./client/build/"));
@@ -17,7 +17,7 @@ setInterval(() => {
     if (err) {
       console.log("Unable to Read the Directory " + err);
     }
-	  
+
     filesArr = files;
   });
 }, 2000);
@@ -37,18 +37,18 @@ app.post("/uploadFile", function (req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   var form = new formidable.IncomingForm();
   form.parse(req, function (err, fields, files) {
-    console.log("yash file received")
-    console.log("newpath" , files)
-    var oldpath = files.filetoupload.path;
-      var newpath = './files/' + files.filetoupload.name;
-      fs.rename(oldpath, newpath, function (err) {
-        if (err) throw err;
-        res.send('File uploaded and moved!');
-        res.end();
-      });
-  })
-  
-  console.log(req.data)
+    console.log("yash file received");
+    console.log("newpath", files);
+    var oldpath = files.file.path;
+    var newpath = "./files/" + files.file.name;
+    fs.rename(oldpath, newpath, function (err) {
+      if (err) throw err;
+      res.send("File uploaded and moved!");
+      res.end();
+    });
+  });
+
+  console.log(req.data);
   res.send("matchedFiles");
 });
 
@@ -62,5 +62,3 @@ app.get("/list.js", (req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.send(JSON.stringify(filesArr));
 });
-
-

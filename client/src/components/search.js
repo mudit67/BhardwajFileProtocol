@@ -1,6 +1,8 @@
 import React from "react";
 
 import config from "../config.json";
+import  axios from "axios";
+
 
 import {
   Container,
@@ -34,7 +36,7 @@ class Search extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.updateList = this.updateList.bind(this);
     this.fileUpload = this.fileUpload.bind(this);
-    
+
     this.closeMenu = this.closeMenu.bind(this);
   }
   handleSubmit(e) {
@@ -77,14 +79,13 @@ class Search extends React.Component {
   fileUpload(event) {
     const data = new FormData();
     data.append("file", event.target.files[0]);
-    console.log(data)
-    fetch(this.backendUrl + "/uploadFile", {
-      method: "POST",
-      body: JSON.stringify(data),
-    })
-      .then((response) => response.json())
-      .then((data1) => {
-        console.log(data1);
+    axios
+      .post(this.backendUrl + "/uploadFile", data, config)
+      .then((response) => {
+        alert(response.body);
+      })
+      .catch((error) => {
+        console.error(error);
       });
   }
 
