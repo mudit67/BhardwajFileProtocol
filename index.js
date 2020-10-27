@@ -5,7 +5,7 @@ const fs = require("fs");
 const path = require('path');
 const formidable = require("formidable");
 
-app.use("/", express.static(path.join(__dirname,'client','build')));
+app.use("/", express.static("./client/build"));
 app.use("/files", express.static("./files"));
 
 app.listen(8000, () => {
@@ -52,7 +52,7 @@ app.post("/uploadFile", function (req, res) {
       }
     });
   });
-  
+
 });
 
 app.get("/printarr", (req, res) => {
