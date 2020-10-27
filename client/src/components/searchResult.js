@@ -65,7 +65,6 @@ class SearchResult extends React.Component {
 	// }
 
 	render(){
-		var searchVal = this.props;
 		const searchResponse = (searchVal) => {
 			fetch ('http://localhost:8000/searchall?q=' + this.props.searchVal)
 			.then((response) => response.json())
