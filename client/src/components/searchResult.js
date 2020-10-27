@@ -51,7 +51,17 @@ class SearchResult extends React.PureComponent {
 						{Val.substring(0,Val.length - 4)}
 					</a>
 				);
-
+		const searchResponse = (searchVal) => {
+			fetch ('http://localhost:8000/searchall?q=' + this.props.searchVal)
+			.then((response) => response.json())
+			.then((data) => {
+							data.map((Val,index) => {
+								return(
+									<div key={index} >
+										{Val}
+									</div>
+								);
+							})
 			});
 	  return(
 	    <div>
