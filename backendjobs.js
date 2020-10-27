@@ -18,7 +18,7 @@ async function sendRequest(requestUrl) {
 }
 
 async function commitNewUrl(newUrl) {
-  let configPayload = JSON.stringify({ url: newUrl , local:"https://localhost:8000"});
+  let configPayload = JSON.stringify({ url: newUrl , local:"http://localhost:8000"});
   fs.writeFileSync("./client/src/config.json", configPayload);
   try {
     const { stdout, stderr } = await exec(`./bashScripts/updateNewUrl.sh`);

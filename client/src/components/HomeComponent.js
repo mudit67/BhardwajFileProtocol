@@ -7,8 +7,7 @@ import {Carousel,
 	}
 	 from 'reactstrap';
 import Items from './CarouselItems.js';
-
-
+import {withRouter} from 'react-router-dom';
 
 const HomeComponent = (props) => {
 	const [activeIndex, setActiveIndex] = useState(0);
@@ -30,28 +29,45 @@ const HomeComponent = (props) => {
 	    if (animating) return;
 	    setActiveIndex(newIndex);
 	}
-
+  const ClickHandler = (name,e) => {
+    e.preventDefault();
+    var page = `/player/${name}`
+    props.history.push(page);
+  };
 	const slides = Items.map((item) => {
 		return(
 			<CarouselItem
 	        onExiting={() => setAnimating(true)}
 	        onExited={() => setAnimating(false)}
 	        key={item.caption}
-	        className="row"
+	        className="row pr-0"
 	      >
-	        <img className="Carousel-img col-4" src={item.src} alt={item.altText} />
-	        <CarouselCaption className="col-5" captionHeader={item.caption} captionText="" />
+          <a
+            className="d-none d-md-block"
+            type="button"
+            href={`/player/${item.altText}`}
+            onClick={(e) => {ClickHandler(item.altText,e)} }
+          >
+            <CarouselCaption className="offset-md-3" captionHeader={item.caption} captionText=""/>
+          </a>
+      <a
+        className="col-12 pr-0 col-md-4 link-img"
+        type="button"
+        href={`/player/${item.altText}`}
+        onClick={(e) => {ClickHandler(item.altText,e)} }
+        >
+          <img className="Carousel-img" src={item.src} alt={item.altText}/>
+        </a>
 	      </CarouselItem>
 		);
 	});
 	return(
-		<div className="container">
-			<div className="row">
+			<div className="ml-0 mr-0 ml-md-4 pl-md-1 pr-0 pl-0 col-md-8 pr-md-0">
 				<Carousel
 					activeIndex={activeIndex}
       		next={next}
 				  previous={previous}
-          interval="3000"
+          interval={3000}
 				>
   				<CarouselIndicators
   					items={Items}
@@ -63,9 +79,8 @@ const HomeComponent = (props) => {
         	<CarouselControl direction="next" directionText="Next" onClickHandler={next} />
 				</Carousel>
 			</div>
-		</div>
 	);
 }
 
-export default HomeComponent;
+export default withRouter(HomeComponent);
 // captionText={item.caption}
