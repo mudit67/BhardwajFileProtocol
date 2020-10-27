@@ -4,7 +4,6 @@ import Search from "./components/search.js";
 import VidComponent from "./components/VidComponent.js";
 import SearchResult from "./components/searchResult.js";
 import HomeComponent from "./components/HomeComponent.js";
-import config from "./config.json";
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -14,14 +13,15 @@ class App extends React.Component {
       searchResponse:[]
     };
     if (window.location.host.match("localhost")) {
-      this.backendUrl = config.local
+      this.backendUrl = "localhost:8000"
     }else{
-      this.backendUrl = config.url
+      this.backendUrl = window.config.url
     }
   }
   render() {
     return (
       <>
+        <script src="./config.js"/>
         <BrowserRouter>
           <div className="page-wrapper">
             <Search
@@ -75,9 +75,9 @@ class MainContent extends React.Component{
     };
     this.closeMenu = this.closeMenu.bind(this);
     if (window.location.host.match("localhost")) {
-      this.backendUrl = config.local
+      this.backendUrl = "localhost:8000"
     }else{
-      this.backendUrl = config.url
+      this.backendUrl = window.config.url
     }
   }
   closeMenu() {

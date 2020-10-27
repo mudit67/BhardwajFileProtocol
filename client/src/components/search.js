@@ -1,5 +1,4 @@
 import React from "react";
-import config from "./../config.json"
 import {
   Row,
   UncontrolledDropdown,
@@ -26,10 +25,11 @@ class Search extends React.Component {
 
     // CONSTANTS
     this.DEBOUNCETIME = 400; /*this the wait interval before sending call to backend*/
+    window.config = window.config || {}
     if (window.location.host.match("localhost")) {
-      this.backendUrl = config.local
+      this.backendUrl = window.config.local
     }else{
-      this.backendUrl = config.url
+      this.backendUrl = window.config.url
     }
     // this.redirectToPlayer = this.redirectToPlayer.bind(this);
     this.redirectToPage = this.redirectToPage.bind(this);
@@ -68,7 +68,7 @@ class Search extends React.Component {
     const data = new FormData();
     data.append("file", event.target.files[0]);
     axios
-      .post(this.backendUrl + "/uploadFile", data, config)
+      .post(this.backendUrl + "/uploadFile", data, {})
       .then((response) => {
         console.log(response)
         alert(response.data);
