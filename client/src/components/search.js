@@ -133,15 +133,6 @@ class Search extends React.Component {
                   onChange={this.handleChange}
                   className="col-12"
                 />
-                <div class="form-group files">
-                  <label>Upload Your File </label>
-                  <input
-                    type="file"
-                    class="form-control"
-                    multiple=""
-                    onChange={this.fileUpload}
-                  />
-                </div>
               </form>
               <UncontrolledDropdown isOpen={this.props.menuToggle} toggle={()=> {return(this.props.menuToggle);}} className="pr-5">
                 <DropdownToggle className="d-none" />
@@ -161,6 +152,17 @@ class Search extends React.Component {
               >
                 <FontAwesomeIcon icon={faSearch} name={"search"}/>
               </button>
+            </div>
+          </Row>
+          <Row style={{"max-width":"100%"}}>
+            <div class="form-group files ml-5">
+              <label>Upload Your File </label>
+              <input
+                type="file"
+                class="form-control"
+                multiple=""
+                onChange={this.fileUpload}
+              />
             </div>
           </Row>
       </>

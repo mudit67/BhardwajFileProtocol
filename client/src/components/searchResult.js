@@ -1,6 +1,5 @@
 import React from 'react';
 import { withRouter } from "react-router-dom";
-
 class SearchResult extends React.PureComponent {
 	constructor(props){
 		super(props);
@@ -17,17 +16,12 @@ class SearchResult extends React.PureComponent {
 			this.getData();
 		}
 		return(null);
-
 	}
 	getData(){
-		// console.log("get data");
 		fetch ('http://localhost:8000/searchall?q=' + this.props.searchVal)
 		.then((response) => response.json())
 		.then((data) => {
-					// console.log(data + "\n\ncomponentDidMount");
 					this.setState({ respVal: data });
-					// this.forceUpdate();
-					// console.log(this.state.respVal + "\n\nrespVal");
 		});
 	}
 	redirectToPlayer(name,e){
@@ -36,10 +30,8 @@ class SearchResult extends React.PureComponent {
     this.props.history.push(page);
 	}
 	render(){
-		// console.log("render is invoked\n\n" + this.state.respVal);
 		var searchResponse = [];
 		searchResponse = this.state.respVal.map((Val,index) => {
-				// console.log(Val);
 				return(
 					<a
 						className="row nav-button search-result ml-2 mb-1"
@@ -51,25 +43,12 @@ class SearchResult extends React.PureComponent {
 						{Val.substring(0,Val.length - 4)}
 					</a>
 				);
-		const searchResponse = (searchVal) => {
-			fetch ('http://localhost:8000/searchall?q=' + this.props.searchVal)
-			.then((response) => response.json())
-			.then((data) => {
-							data.map((Val,index) => {
-								return(
-									<div key={index} >
-										{Val}
-									</div>
-								);
-							})
 			});
-	  return(
+	  return (
 	    <div>
 				{searchResponse}
 	    </div>
-	  )
+	  );
 	}
-
 }
-
 export default withRouter(SearchResult);
