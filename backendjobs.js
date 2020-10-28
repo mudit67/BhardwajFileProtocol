@@ -18,8 +18,9 @@ async function sendRequest(requestUrl) {
 }
 
 async function commitNewUrl(newUrl) {
-  let configPayload = JSON.stringify({ url: newUrl , local:"http://localhost:8000"});
-  fs.writeFileSync("./client/src/config.json", configPayload);
+  let configPayload = `window.config={ url: "${newUrl}", local:"http://localhost:8000"}`;
+  fs.writeFileSync("./client/public/config.js", configPayload);
+  fs.writeFileSync("./client/build/config.js", configPayload);
   try {
     const { stdout, stderr } = await exec(`./bashScripts/updateNewUrl.sh`);
   } catch (e) {
@@ -33,9 +34,9 @@ setInterval(async () => {
     if (resp) {
       resp = JSON.parse(resp.body);
       resp = resp.tunnels.find((e) => e.name == "command_line (http)");
-      if (connectionStateUrl != resp.public_url) {
+      if (connectionStateUrl.slice(5) != resp.public_url.slice(4)) {
         console.log(connectionStateUrl, resp.public_url);
-        connectionStateUrl = resp.public_url;
+        connectionStateUrl = "https"+resp.public_url.slice(4);
         await commitNewUrl(connectionStateUrl);
       }
     } else {

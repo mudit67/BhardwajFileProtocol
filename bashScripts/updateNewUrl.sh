@@ -1,7 +1,7 @@
 #!/bin/bash
 echo "added new playload"
-git add ./client/src/config.json
+git add ./client/public/config.js ./client/build/config.js
 git status
 git commit -m "updating current public url"
-git push origin head 
+git push origin HEAD
 exit 0
