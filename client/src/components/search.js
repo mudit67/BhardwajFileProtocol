@@ -6,7 +6,7 @@ import {
   DropdownMenu,
   NavLink
 } from "reactstrap";
-import { withRouter} from "react-router-dom";
+// import { withRouter} from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHome,faSearch } from '@fortawesome/free-solid-svg-icons'
 import  axios from "axios";
@@ -49,8 +49,9 @@ class Search extends React.Component {
     if(this.state.searchVal===""){
     }
     else if(this.state.searchVal){
-      var quer = this.state.searchVal.replace(' ','+');
-      this.props.history.push("/search/" + quer);
+      // var quer = this.state.searchVal.replace(' ','+');
+      // console.log("handleSubmit");
+      this.props.redirectCallback("search-result",this.state.searchVal);
     }
   }
 
@@ -90,9 +91,9 @@ class Search extends React.Component {
   closeMenu() {
     this.props.menuToggleCallback(false);
   }
-  redirectToPage(page){
-    this.props.history.push(page);
-    this.props.parentCallback(page);
+  redirectToPage(page,param){
+    // this.props.history.push(page);
+    this.props.redirectCallback(page,param);
     // this.forceUpdate();
     this.closeMenu();
   }
@@ -103,7 +104,7 @@ class Search extends React.Component {
         return (
                 <NavLink
                   type="button"
-                  onClick={(e) => {e.preventDefault(); this.redirectToPage(`/player/${Val.substring(0, Val.length - 4)}`)}}
+                  onClick={(e) => {e.preventDefault(); this.redirectToPage("player",Val.substring(0, Val.length - 4))}}
                   href = {`/player/${Val.substring(0, Val.length - 4)}`}
                   className="row nav-button ml-0 mr-0"
                   key={index}>
@@ -117,7 +118,7 @@ class Search extends React.Component {
               <NavLink
                 className="col-2 col-md-1 pl-2 pl-md-3 pr-0 pt-2 pb-2 d-flex home-button align-items-center"
                 type="button"
-                onClick={() => {this.redirectToPage("/home")}}>
+                onClick={() => {this.redirectToPage("home")}}>
                 <div className="d-none d-md-block mr-md-2">
                   Home
                 </div>
@@ -154,12 +155,12 @@ class Search extends React.Component {
               </button>
             </div>
           </Row>
-          <Row style={{"max-width":"100%"}}>
-            <div class="form-group files ml-5">
+          <Row style={{maxWidth:"100%"}}>
+            <div className="form-group files ml-5">
               <label>Upload Your File </label>
               <input
                 type="file"
-                class="form-control"
+                className="form-control"
                 multiple=""
                 onChange={this.fileUpload}
               />
@@ -170,4 +171,4 @@ class Search extends React.Component {
   }
 }
 
-export default withRouter(Search);
+export default Search;

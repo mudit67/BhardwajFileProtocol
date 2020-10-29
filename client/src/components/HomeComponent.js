@@ -7,7 +7,7 @@ import {Carousel,
 	}
 	 from 'reactstrap';
 import Items from './CarouselItems.js';
-import {withRouter} from 'react-router-dom';
+// import {withRouter} from 'react-router-dom';
 
 const HomeComponent = (props) => {
 	const [activeIndex, setActiveIndex] = useState(0);
@@ -31,8 +31,9 @@ const HomeComponent = (props) => {
 	}
   const ClickHandler = (name,e) => {
     e.preventDefault();
-    var page = `/player/${name}`
-    props.history.push(page);
+    // var page = `/player/${name}`
+    // props.history.push(page);
+    props.redirectCallback("player",name)
   };
 	const slides = Items.map((item) => {
 		return(
@@ -82,5 +83,5 @@ const HomeComponent = (props) => {
 	);
 }
 
-export default withRouter(HomeComponent);
+export default HomeComponent;
 // captionText={item.caption}

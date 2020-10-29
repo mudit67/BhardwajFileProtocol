@@ -1,5 +1,5 @@
 import React from 'react';
-import { withRouter } from "react-router-dom";
+// import { withRouter } from "react-router-dom";
 class SearchResult extends React.PureComponent {
 	constructor(props){
 		super(props);
@@ -26,8 +26,9 @@ class SearchResult extends React.PureComponent {
 	}
 	redirectToPlayer(name,e){
 		e.preventDefault();
-		var page = `/player/${name}`
-    this.props.history.push(page);
+		// var page = `/player/${name}`
+    // this.props.history.push(page);
+		this.props.redirectCallback("player",name);
 	}
 	render(){
 		var searchResponse = [];
@@ -51,4 +52,4 @@ class SearchResult extends React.PureComponent {
 	  );
 	}
 }
-export default withRouter(SearchResult);
+export default SearchResult;
