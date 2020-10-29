@@ -4,8 +4,8 @@ import React from 'react';
 
 const VidComponent = (props) => {
 	// console.log(this.props.srcName);
+	// main player
 	return(
-		// main player
 		<div className="container">
 			<div className="row" >
 				<div className="col-12 col-md-7">
