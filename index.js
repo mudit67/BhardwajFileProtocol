@@ -35,6 +35,20 @@ app.get("/search", function (req, res) {
   res.send(matchedFiles);
 });
 
+app.use(function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With,X-metadata');
+    res.header('Access-Control-Expose-Headers': 'content-type', 'content-disposition', 'x-metadata');
+})
+// app.options('*', cors({
+//   origin: '*',
+//   methods: [ 'GET', 'POST' ],
+//   allowedHeaders: [ 'content-type', 'authorization', 'x-metadata', 'x-to' ],
+//   exposedHeaders: [ 'content-type', 'content-disposition', 'x-metadata' ],
+//   optionsSuccessStatus: 200
+// }));
+
 app.post("/uploadFile", function (req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   var form = new formidable.IncomingForm();

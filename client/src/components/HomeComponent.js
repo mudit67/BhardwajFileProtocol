@@ -61,7 +61,7 @@ const HomeComponent = (props) => {
 		);
 	});
 	return(
-			<div className="ml-0 mr-0 ml-md-4 pl-md-1 pr-0 pl-0 col-md-8 pr-md-0">
+			<div className="ml-0 mr-0 ml-md-4 pl-md-1 pr-0 pl-0 col-md-11 pr-md-0">
 				<Carousel
 					activeIndex={activeIndex}
       		next={next}

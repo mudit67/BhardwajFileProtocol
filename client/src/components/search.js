@@ -46,7 +46,9 @@ class Search extends React.Component {
         .then((response) => response.json())
         .then((data) => {
               this.setState({ respVal: data });
-              this.props.menuToggleCallback(true);
+              if(this.state.searchVal!==""){
+                this.props.menuToggleCallback(true);
+              }
         })
     }, this.DEBOUNCETIME);
   }
@@ -88,15 +90,15 @@ class Search extends React.Component {
       <>
           <Row className="align-items-center navbar-home">
               <NavLink
-                className="col-2 col-md-1 pl-md-3 pr-0 pt-2 pb-2 d-flex home-button align-items-center"
+                className="pt-2 pb-2 d-flex home-button align-items-center"
                 type="button"
                 onClick={() => {this.redirectToPage("home"," ")}}>
-                <div className="d-none d-md-block mr-md-2">
+                <div className="d-none d-md-block ml-md-2 mr-md-2">
                   Home
                 </div>
                 <FontAwesomeIcon icon={faHome} name={"home"} className="ml-1 mt-1 mb-1" />
               </NavLink>
-            <div className="col-7 pl-1 pl-md-2 pr-0">
+            <div className="col-6 pl-1 pl-md-2 pr-0">
               <form className="row" onSubmit={this.handleSubmit} autoComplete="off">
                 <input
                   type="search"
@@ -120,18 +122,18 @@ class Search extends React.Component {
               <button
                 type="button"
                 onClick={this.handleSubmit}
-                className="ml-0 nav-button searchButton"
+                className="nav-button searchButton"
               >
                 <FontAwesomeIcon icon={faSearch} name={"search"}/>
               </button>
-              <div>
-              <button className="nav-button align-items-center" type="button" onClick={() => this.redirectToPage("upload","")} onMouseOver={() => {this.setState({tip:true})}} onMouseLeave={() => {this.setState({tip:false})}}>
-                <FontAwesomeIcon icon={faUpload} name={"upload"}/>
-              </button>
-              <div className={this.state.tip ? "uploadTip mr-md-2" :"d-none" }>
-                Upload Files
+              <div className="ml-1 upload-nav">
+                <button className="nav-button align-items-center" type="button" onClick={() => this.redirectToPage("upload","")} onMouseOver={() => {this.setState({tip:true})}} onMouseLeave={() => {this.setState({tip:false})}}>
+                  <FontAwesomeIcon icon={faUpload} name={"upload"}/>
+                </button>
+                <div className={this.state.tip ? "uploadTip" :"d-none" }>
+                  Upload Files
+                </div>
               </div>
-          </div>
         </Row>
       </>
     );
