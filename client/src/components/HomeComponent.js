@@ -31,7 +31,7 @@ const HomeComponent = (props) => {
 	}
   const ClickHandler = (name,e) => {
     e.preventDefault();
-    props.redirectCallback("player",name)
+    props.redirectCallback("player",name);
   };
 	const slides = Items.map((item) => {
 		return(

@@ -28,6 +28,7 @@ class App extends React.Component {
             <Search
               redirectCallback={ (comp,param) => {
                   this.setState({ WComponent: comp,Parameter:param});
+                  console.log(comp + '\n' + param);
                 }
               }
               menuToggleCallback={(toggle) => {
@@ -62,14 +63,25 @@ class App extends React.Component {
 //
 class MainContent extends React.Component{
   shouldComponentUpdate(nextProps,nextState){
-    if((nextProps.compToDis!==this.props.compToDis) || (nextProps.paramForComp!==this.props.paramForComp)){
+    // console.log("nextProps = " + nextProps.compToDis + " " + nextProps.paramForComp + '\n' +
+    //       "this.props = " + this.props.compToDis + ' ' + this.props.paramForComp + '\n' +
+    //       "next state = " + nextState.WComponent + ' ' + nextState.params + '\n' +
+    //       "this.state = " + this.state.WComponent + ' ' + this.state.params + '\n'
+    // );
+    if((nextProps.compToDis!==this.props.compToDis) ||
+    (nextProps.paramForComp!==this.props.paramForComp) ||
+    (nextProps.compToDis!==this.state.WComponent) ||
+    (nextProps.paramForComp!==this.state.params)
+    ){
       this.setState({ WComponent: nextProps.compToDis,params:nextProps.paramForComp});
       return(true);
     }
     else if((nextState.WComponent!==this.state.WComponent) || (nextState.params!==this.state.params)){
+      // this.setState({ WComponent: nextProps.compToDis,params:nextProps.paramForComp});
       return(true);
     }
     else{
+      console.log(false)
       return(false);
     }
   }

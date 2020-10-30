@@ -90,7 +90,7 @@ class Search extends React.Component {
               <NavLink
                 className="col-2 col-md-1 pl-md-3 pr-0 pt-2 pb-2 d-flex home-button align-items-center"
                 type="button"
-                onClick={() => {this.redirectToPage("home","")}}>
+                onClick={() => {this.redirectToPage("home"," ")}}>
                 <div className="d-none d-md-block mr-md-2">
                   Home
                 </div>
