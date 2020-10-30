@@ -59,7 +59,7 @@ class Search extends React.Component {
 
   updateList() {
     this.debounceTimeout = setTimeout(() => {
-        fetch( this.backendUrl + "/search?q=" + this.state.searchVal)
+        fetch( this.backendUrl + "/search?q=" + this.state.searchVal+"&l="+8)
         .then((response) => response.json())
         .then((data) => {
               this.setState({ respVal: data });
