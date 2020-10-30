@@ -28,7 +28,9 @@ class Search extends React.Component {
     window.config = window.config || {}
     if (window.location.host.match("localhost")) {
       this.backendUrl = window.config.local
+      window.backendUrl = window.config.local
     }else{
+      window.backendUrl = window.config.url
       this.backendUrl = window.config.url
     }
     // this.redirectToPlayer = this.redirectToPlayer.bind(this);
