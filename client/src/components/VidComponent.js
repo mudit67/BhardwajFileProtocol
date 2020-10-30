@@ -10,7 +10,7 @@ const VidComponent = (props) => {
 			<div className="row" >
 				<div className="col-12 col-md-7">
 						<div className="frame-container">
-							<iframe className="playerframe" title={props.srcName} src={`http://localhost:8000/files/${props.srcName}.mp4`} allowFullScreen />
+							<iframe className="playerframe" title={props.srcName} src={`${window.backendUrl}/files/${props.srcName}.mp4`} allowFullScreen />
 						</div>
 				</div>
 			</div>

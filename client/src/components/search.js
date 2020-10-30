@@ -26,7 +26,9 @@ class Search extends React.Component {
     window.config = window.config || {}
     if (window.location.host.match("localhost")) {
       this.backendUrl = window.config.local
+      window.backendUrl = window.config.local
     }else{
+      window.backendUrl = window.config.url
       this.backendUrl = window.config.url
     }
     // this.redirectToPlayer = this.redirectToPlayer.bind(this);
@@ -49,7 +51,7 @@ class Search extends React.Component {
 
   updateList() {
     this.debounceTimeout = setTimeout(() => {
-        fetch( this.backendUrl + "/search?q=" + this.state.searchVal)
+        fetch( this.backendUrl + "/search?q=" + this.state.searchVal+"&l="+8)
         .then((response) => response.json())
         .then((data) => {
               this.setState({ respVal: data });
