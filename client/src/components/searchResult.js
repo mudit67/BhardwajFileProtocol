@@ -18,7 +18,7 @@ class SearchResult extends React.PureComponent {
 		return(null);
 	}
 	getData(){
-		fetch ('http://localhost:8000/searchall?q=' + this.props.searchVal)
+		fetch ('http://localhost:8000/search?q=' + this.props.searchVal)
 		.then((response) => response.json())
 		.then((data) => {
 					this.setState({ respVal: data });

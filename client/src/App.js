@@ -13,10 +13,11 @@ class App extends React.Component {
       searchResponse:[],
       WComponent:"home"
     };
+    window.config = window.config || {}
     if (window.location.host.match("localhost")) {
-      this.backendUrl = "localhost:8000"
+      window.backendUrl = window.config.local
     }else{
-      this.backendUrl = window.config.url
+      window.backendUrl = window.config.url || ""
     }
   }
   render() {
@@ -84,11 +85,6 @@ class MainContent extends React.Component{
       params:this.props.paramForComp
     };
     this.closeMenu = this.closeMenu.bind(this);
-    if (window.location.host.match("localhost")) {
-      this.backendUrl = "localhost:8000"
-    }else{
-      this.backendUrl = window.config.url
-    }
   }
   closeMenu() {
       // this.this.setState({shouldRender=true});

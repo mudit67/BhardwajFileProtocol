@@ -25,14 +25,6 @@ class Search extends React.Component {
 
     // CONSTANTS
     this.DEBOUNCETIME = 400; /*this the wait interval before sending call to backend*/
-    window.config = window.config || {}
-    if (window.location.host.match("localhost")) {
-      this.backendUrl = window.config.local
-      window.backendUrl = window.config.local
-    }else{
-      window.backendUrl = window.config.url
-      this.backendUrl = window.config.url
-    }
     // this.redirectToPlayer = this.redirectToPlayer.bind(this);
     this.redirectToPage = this.redirectToPage.bind(this);
     this.debounceTimeout = 0;
@@ -59,7 +51,7 @@ class Search extends React.Component {
 
   updateList() {
     this.debounceTimeout = setTimeout(() => {
-        fetch( this.backendUrl + "/search?q=" + this.state.searchVal+"&l="+8)
+        fetch( window.backendUrl + "/search?q=" + this.state.searchVal+"&l="+8)
         .then((response) => response.json())
         .then((data) => {
               this.setState({ respVal: data });
@@ -71,7 +63,7 @@ class Search extends React.Component {
     const data = new FormData();
     data.append("file", event.target.files[0]);
     axios
-      .post(this.backendUrl + "/uploadFile", data, {})
+      .post(window.backendUrl + "/uploadFile", data, {})
       .then((response) => {
         console.log(response)
         alert(response.data);
