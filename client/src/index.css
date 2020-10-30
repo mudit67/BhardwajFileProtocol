@@ -94,7 +94,7 @@ body {
 	color: white;
 	background-color: #303030;
 	margin-left: 1.5rem;
-
+	padding-left: .55rem;
 }
 .home-button:hover{
 	color: white;
@@ -116,4 +116,27 @@ body {
 }
 .search-result{
 	max-width:72.4%;
+}
+
+.uploadTip{
+	margin-top: .5rem;
+	margin-left: -1rem;
+	padding: .3rem;
+	position: absolute;
+	border-radius: 0.25rem;
+	border: 0.1rem;
+	border-style: solid;
+	border-color: #121212;
+	background-color: #606060;
+	color: white;
+}
+
+.upload{
+	background-color: #121212;
+	color: white;
+}
+.upload-input{
+	display: flex;
+	background-color: #121212;
+	color: white;
 }

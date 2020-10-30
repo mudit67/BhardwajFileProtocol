@@ -6,11 +6,8 @@ import {
   DropdownMenu,
   NavLink
 } from "reactstrap";
-// import { withRouter} from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHome,faSearch } from '@fortawesome/free-solid-svg-icons'
-import  axios from "axios";
-
+import { faHome,faSearch,faUpload } from '@fortawesome/free-solid-svg-icons';
 class Search extends React.Component {
   shouldComponentUpdate(nextProps, nextState){
     return true;
@@ -21,6 +18,7 @@ class Search extends React.Component {
       respVal: [],
       vidName: null,
       menuToggle: false,
+      tip:false
     };
 
     // CONSTANTS
@@ -38,19 +36,13 @@ class Search extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.updateList = this.updateList.bind(this);
     this.closeMenu = this.closeMenu.bind(this);
-    this.fileUpload = this.fileUpload.bind(this);
   }
   handleSubmit(event) {
     event.preventDefault();
-    // console.log(event);
     this.props.menuToggleCallback(false);
-    // this.props.searchResponseCallback(this.state.respVal);
-    // console.log(quer);
     if(this.state.searchVal===""){
     }
     else if(this.state.searchVal){
-      // var quer = this.state.searchVal.replace(' ','+');
-      // console.log("handleSubmit");
       this.props.redirectCallback("search-result",this.state.searchVal);
     }
   }
@@ -61,29 +53,20 @@ class Search extends React.Component {
         .then((response) => response.json())
         .then((data) => {
               this.setState({ respVal: data });
+        })
+        .then(() => {
+            this.props.menuToggleCallback(true);
         });
     }, this.DEBOUNCETIME);
   }
 
-  fileUpload(event) {
-    const data = new FormData();
-    data.append("file", event.target.files[0]);
-    axios
-      .post(this.backendUrl + "/uploadFile", data, {})
-      .then((response) => {
-        console.log(response)
-        alert(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
-
   handleChange(event) {
-    this.setState({ searchVal: event.target.value, menuToggle: true });
-    this.props.menuToggleCallback(true);
-    this.updateList();
-    if(event.target.value===""){
+    if(event.target.value!==""){
+      this.setState({ searchVal: event.target.value});
+      this.updateList();
+    }
+    else{
+        this.setState({searchVal: ""})
         this.props.menuToggleCallback(false);
     }
   }
@@ -92,9 +75,7 @@ class Search extends React.Component {
     this.props.menuToggleCallback(false);
   }
   redirectToPage(page,param){
-    // this.props.history.push(page);
     this.props.redirectCallback(page,param);
-    // this.forceUpdate();
     this.closeMenu();
   }
   render() {
@@ -116,13 +97,13 @@ class Search extends React.Component {
       <>
           <Row className="align-items-center navbar-home">
               <NavLink
-                className="col-2 col-md-1 pl-2 pl-md-3 pr-0 pt-2 pb-2 d-flex home-button align-items-center"
+                className="col-2 col-md-1 pl-md-3 pr-0 pt-2 pb-2 d-flex home-button align-items-center"
                 type="button"
-                onClick={() => {this.redirectToPage("home")}}>
+                onClick={() => {this.redirectToPage("home","")}}>
                 <div className="d-none d-md-block mr-md-2">
                   Home
                 </div>
-                <FontAwesomeIcon icon={faHome} name={"home"} className="m-1" />
+                <FontAwesomeIcon icon={faHome} name={"home"} className="ml-1 mt-1 mb-1" />
               </NavLink>
             <div className="col-7 pl-1 pl-md-2 pr-0">
               <form className="row" onSubmit={this.handleSubmit} autoComplete="off">
@@ -145,27 +126,22 @@ class Search extends React.Component {
                 </DropdownMenu>
               </UncontrolledDropdown>
             </div>
-            <div className="col-2 pl-0">
               <button
                 type="button"
                 onClick={this.handleSubmit}
-                className="nav-button"
+                className="ml-0 nav-button searchButton"
               >
                 <FontAwesomeIcon icon={faSearch} name={"search"}/>
               </button>
-            </div>
-          </Row>
-          <Row style={{maxWidth:"100%"}}>
-            <div className="form-group files ml-5">
-              <label>Upload Your File </label>
-              <input
-                type="file"
-                className="form-control"
-                multiple=""
-                onChange={this.fileUpload}
-              />
-            </div>
-          </Row>
+              <div>
+              <button className="nav-button align-items-center" type="button" onClick={() => this.props.redirectCallback("upload")} onMouseOver={() => {this.setState({tip:true})}} onMouseLeave={() => {this.setState({tip:false})}}>
+                <FontAwesomeIcon icon={faUpload} name={"upload"}/>
+              </button>
+              <div className={this.state.tip ? "uploadTip mr-md-2}" :"d-none" }>
+                Upload Files
+              </div>
+          </div>
+        </Row>
       </>
     );
   }

@@ -1,5 +1,5 @@
 import React from "react";
-// import { Switch, Redirect, Route, BrowserRouter } from "react-router-dom";
+import Upload from './components/upload.js'
 import Search from "./components/search.js";
 import VidComponent from "./components/VidComponent.js";
 import SearchResult from "./components/searchResult.js";
@@ -139,8 +139,15 @@ class MainContent extends React.Component{
          );
         // }
       }
+      case "upload": {
+        return(
+            <Upload url={this.backendUrl}/>
+        );
+      }
       default:{
-        break;
+        return (
+          <div></div>
+        );
       }
     }
     // return(
