@@ -13,10 +13,11 @@ class App extends React.Component {
       searchResponse:[],
       WComponent:"home"
     };
+    window.config = window.config || {}
     if (window.location.host.match("localhost")) {
-      this.backendUrl = "localhost:8000"
+      window.backendUrl = window.config.local
     }else{
-      this.backendUrl = window.config.url
+      window.backendUrl = window.config.url || ""
     }
   }
   render() {
@@ -84,32 +85,13 @@ class MainContent extends React.Component{
       params:this.props.paramForComp
     };
     this.closeMenu = this.closeMenu.bind(this);
-    if (window.location.host.match("localhost")) {
-      this.backendUrl = "localhost:8000"
-    }else{
-      this.backendUrl = window.config.url
-    }
   }
   closeMenu() {
-      // this.this.setState({shouldRender=true});
       this.props.maincontentCallback(false);
     }
   render(){
-    // console.log(this.props.shouldRender);
-    // const Result=() => {
-    //   // console.log("result");
-    //   // var query = match.params.query.replace('+',' ');
-    // };
-    // const videoPlayer =() => {
-    //   console.log("videos");
-    //   // var videoName = match.params.videoname.replace('+', ' ');
-    //   return(
-    //     <VidComponent srcName={this.state.params}/>
-    //   );
-    // }
     switch (this.state.WComponent) {
       case "home":{
-        // const mainComponent=() => {
         return(
           <HomeComponent
             redirectCallback={ (comp,param) => {
@@ -118,17 +100,13 @@ class MainContent extends React.Component{
             }
             />
         );
-        // };
       }
       case "player": {
-        // const mainComponent = () => {
           return(
             <VidComponent srcName={this.state.params}/>
           );
-        // }
       }
       case "search-result":{
-        // const mainComponent= () => {
         return(
            <SearchResult searchVal={this.state.params}
              redirectCallback={ (comp,param) => {
@@ -137,7 +115,6 @@ class MainContent extends React.Component{
              }
              />
          );
-        // }
       }
       case "upload": {
         return(
@@ -150,33 +127,6 @@ class MainContent extends React.Component{
         );
       }
     }
-    // return(
-    //   <div onClick={this.closeMenu}>
-    //       {mainComponent}
-    //   </div>
-    // );
   }
 }
 export default App;
-
-// <Switch>
-//   <Route
-//     path="/player/:videoname"
-//     component=
-//       {videoPlayer}
-//
-//   />
-//   <Route
-//     path="/search/:query"
-//     component=
-//         {Result}
-//     />
-//
-//   <Route
-//     exact path="/home"
-//     component={
-//       () => <HomeComponent/>
-//     }
-//     />
-// <Redirect to="/home"/>
-// </Switch>

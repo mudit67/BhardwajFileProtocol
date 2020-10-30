@@ -24,16 +24,14 @@ setInterval(() => {
   });
 }, 2000);
 
-// app.get("/", function (req, res) {
-//   res.send("hello world");
-// });
-
 app.get("/search", function (req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   var regex = new RegExp(req.query.q, "i");
   var numberOfSearchResults = req.query.l;
   var matchedFiles = filesArr.filter((obj) => obj.substring(0,obj.length-4).match(regex));
-  matchedFiles = matchedFiles.slice(0,numberOfSearchResults);
+  if (numberOfSearchResults) {
+    matchedFiles = matchedFiles.slice(0,numberOfSearchResults);
+  }
   res.send(matchedFiles);
 });
 
@@ -61,16 +59,3 @@ app.get("/printarr", (req, res) => {
   res.send(JSON.stringify({ filesJson }));
   console.log(JSON.stringify({ filesJson }));
 });
-
-app.get("/list.js", (req, res) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.send(JSON.stringify(filesArr));
-});
-
-app.get('/searchall', (req, res) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  var regex = new RegExp(req.query.q, "i");
-  console.log(regex);
-  var matchedFiles = filesArr.filter((obj) => obj.substring(0,obj.length-4).match(regex));
-  res.send(matchedFiles);
-})
