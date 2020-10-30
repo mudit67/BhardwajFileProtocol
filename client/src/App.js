@@ -28,7 +28,6 @@ class App extends React.Component {
             <Search
               redirectCallback={ (comp,param) => {
                   this.setState({ WComponent: comp,Parameter:param});
-                  console.log(comp,param);
                 }
               }
               menuToggleCallback={(toggle) => {
@@ -63,18 +62,14 @@ class App extends React.Component {
 //
 class MainContent extends React.Component{
   shouldComponentUpdate(nextProps,nextState){
-    console.log(nextProps + '\n' + nextState);
     if((nextProps.compToDis!==this.props.compToDis) || (nextProps.paramForComp!==this.props.paramForComp)){
       this.setState({ WComponent: nextProps.compToDis,params:nextProps.paramForComp});
-      console.log(true);
       return(true);
     }
     else if((nextState.WComponent!==this.state.WComponent) || (nextState.params!==this.state.params)){
-      console.log(true);
       return(true);
     }
     else{
-      console.log(false);
       return(false);
     }
   }

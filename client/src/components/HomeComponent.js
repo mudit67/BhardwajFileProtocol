@@ -31,8 +31,6 @@ const HomeComponent = (props) => {
 	}
   const ClickHandler = (name,e) => {
     e.preventDefault();
-    // var page = `/player/${name}`
-    // props.history.push(page);
     props.redirectCallback("player",name)
   };
 	const slides = Items.map((item) => {

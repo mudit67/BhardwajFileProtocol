@@ -31,7 +31,7 @@ function fileUpload(event,props) {
   const data = new FormData();
   data.append("file", event.target.files[0]);
   axios
-    .post(props.url + "/uploadFile", data, {})
+    .post(`${window.backendUrl}/uploadFile`, data, {})
     .then((response) => {
       console.log(response)
       alert(response.data);

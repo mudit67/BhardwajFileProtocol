@@ -32,11 +32,11 @@ class Search extends React.Component {
   }
   handleSubmit(event) {
     event.preventDefault();
-    this.props.menuToggleCallback(false);
+    this.closeMenu();
     if(this.state.searchVal===""){
     }
     else if(this.state.searchVal){
-      this.props.redirectCallback("search-result",this.state.searchVal);
+      this.redirectToPage("search-result",this.state.searchVal);
     }
   }
 
@@ -46,10 +46,8 @@ class Search extends React.Component {
         .then((response) => response.json())
         .then((data) => {
               this.setState({ respVal: data });
+              this.props.menuToggleCallback(true);
         })
-        .then(() => {
-            this.props.menuToggleCallback(true);
-        });
     }, this.DEBOUNCETIME);
   }
 
@@ -60,7 +58,7 @@ class Search extends React.Component {
     }
     else{
         this.setState({searchVal: ""})
-        this.props.menuToggleCallback(false);
+        this.closeMenu();
     }
   }
 
@@ -68,8 +66,8 @@ class Search extends React.Component {
     this.props.menuToggleCallback(false);
   }
   redirectToPage(page,param){
-    this.props.redirectCallback(page,param);
     this.closeMenu();
+    this.props.redirectCallback(page,param);
   }
   render() {
     var respVal = this.state.respVal;
@@ -127,10 +125,10 @@ class Search extends React.Component {
                 <FontAwesomeIcon icon={faSearch} name={"search"}/>
               </button>
               <div>
-              <button className="nav-button align-items-center" type="button" onClick={() => this.props.redirectCallback("upload")} onMouseOver={() => {this.setState({tip:true})}} onMouseLeave={() => {this.setState({tip:false})}}>
+              <button className="nav-button align-items-center" type="button" onClick={() => this.redirectToPage("upload","")} onMouseOver={() => {this.setState({tip:true})}} onMouseLeave={() => {this.setState({tip:false})}}>
                 <FontAwesomeIcon icon={faUpload} name={"upload"}/>
               </button>
-              <div className={this.state.tip ? "uploadTip mr-md-2}" :"d-none" }>
+              <div className={this.state.tip ? "uploadTip mr-md-2" :"d-none" }>
                 Upload Files
               </div>
           </div>
