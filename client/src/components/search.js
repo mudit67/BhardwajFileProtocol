@@ -42,9 +42,17 @@ class Search extends React.Component {
 
   updateList() {
     this.debounceTimeout = setTimeout(() => {
-        fetch( window.backendUrl + "/search?q=" + this.state.searchVal+"&l="+8)
+        console.log(window.backendUrl + "/search?q=" + this.state.searchVal+"&l="+8);
+        fetch( window.backendUrl + "/search?q=" + this.state.searchVal+"&l="+8, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            "Accept": "application/json"
+          }
+        })
         .then((response) => response.json())
         .then((data) => {
+
               this.setState({ respVal: data });
               this.props.menuToggleCallback(true);
         })

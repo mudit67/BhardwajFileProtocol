@@ -3,7 +3,7 @@ import Upload from './components/upload.js'
 import Search from "./components/search.js";
 import VidComponent from "./components/VidComponent.js";
 import SearchResult from "./components/searchResult.js";
-import HomeComponent from "./components/HomeComponent.js";
+// import HomeComponent from "./components/HomeComponent.js";
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -13,11 +13,22 @@ class App extends React.Component {
       searchResponse:[],
       WComponent:"home"
     };
+    // debugger;
     window.config = window.config || {}
     if (window.location.host.match("localhost")) {
+      console.log(window.location.host);
       window.backendUrl = window.config.local
     }else{
-      window.backendUrl = window.config.url || ""
+      if(window.location.host.match("192.168")){
+        var semi = window.location.host.indexOf(':');
+        // console.log(semi);
+        window.backendUrl = "http://" + window.location.host.substring(0,semi+1) + "8000";
+        console.log(window.backendUrl);
+      }
+      else {
+        window.backendUrl = window.config.url || ""
+        console.log(window.location.host);
+      }
     }
   }
   render() {
@@ -28,7 +39,7 @@ class App extends React.Component {
             <Search
               redirectCallback={ (comp,param) => {
                   this.setState({ WComponent: comp,Parameter:param});
-                  console.log(comp + '\n' + param);
+                  // console.log(comp + '\n' + param);
                 }
               }
               menuToggleCallback={(toggle) => {
@@ -100,12 +111,7 @@ class MainContent extends React.Component{
     switch (this.state.WComponent) {
       case "home":{
         return(
-          <HomeComponent
-            redirectCallback={ (comp,param) => {
-                this.setState({ WComponent: comp,params:param});
-              }
-            }
-            />
+          <div/>
         );
       }
       case "player": {

@@ -26,6 +26,7 @@ setInterval(() => {
 
 app.get("/search", function (req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Content-Type", "application/json");
   var regex = new RegExp(req.query.q, "i");
   var numberOfSearchResults = req.query.l;
   var matchedFiles = filesArr.filter((obj) => obj.substring(0,obj.length-4).match(regex));
