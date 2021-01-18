@@ -3,7 +3,7 @@ import Upload from './components/upload.js'
 import Search from "./components/search.js";
 import VidComponent from "./components/VidComponent.js";
 import SearchResult from "./components/searchResult.js";
-import HomeComponent from "./components/HomeComponent.js";
+// import HomeComponent from "./components/HomeComponent.js";
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -17,7 +17,12 @@ class App extends React.Component {
     if (window.location.host.match("localhost")) {
       window.backendUrl = window.config.local
     }else{
-      window.backendUrl = window.config.url || ""
+      if(window.location.host.match("192.168")){
+        window.backendUrl = "http://" + window.location.host.substring(0,window.location.host.indexOf(':')+1) + "8000";
+      }
+      else{
+        window.backendUrl = window.config.url || ""
+      }
     }
   }
   render() {
@@ -100,12 +105,7 @@ class MainContent extends React.Component{
     switch (this.state.WComponent) {
       case "home":{
         return(
-          <HomeComponent
-            redirectCallback={ (comp,param) => {
-                this.setState({ WComponent: comp,params:param});
-              }
-            }
-            />
+          <div/>
         );
       }
       case "player": {
