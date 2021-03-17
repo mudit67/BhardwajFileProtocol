@@ -4,42 +4,70 @@ const app = express();
 const fs = require("fs");
 const path = require('path');
 const formidable = require("formidable");
-
+const checkIfFile = path => fs.lstatSync(path).isFile();
+const filesDir = "./../../Downloads/";
 app.use("/", express.static("./client/build"));
-app.use("/files", express.static("./files"));
+app.use("/files", express.static(filesDir));
 
 app.listen(8000, () => {
-  console.log("server is running \n");
+  console.log("server is running on 8000");
 });
-
 let filesArr = [];
 filesJson = [];
 setInterval(() => {
-  fs.readdir("files", (err, files) => {
+  let filesArrTemp = [];
+  fs.readdir(filesDir, (err, files) => {
     if (err) {
       console.log("Unable to Read the Directory " + err);
     }
-
-    filesArr = files;
+    files.forEach(file => {
+      if (checkIfFile(path.join(filesDir,file))) {
+        filesArrTemp = filesArrTemp.concat(file);
+        // console.log(file);
+        // console.log(filesArrTemp);
+      }
+      else {
+        filesArrTemp = filesArrTemp.concat(returnDaughterFiles(path.join(filesDir,file)));
+      }
+    });
+    filesArr = filesArrTemp;
   });
 }, 2000);
-
+// setTimeout(() => {  console.log(filesArrTemp);},2000);
+function returnDaughterFiles(dirToCheck) { //function to return all the files present in the dirToCheck Directory and all sub-directory
+  let ReturnArr = []; // temporary arr to hold all files in dirToCheck and also in its sub-folders
+  let contents = []; // temporary arr to hold files and folder contained in dirToCheck and not in its sub-folders maxDepth=0
+  try {
+    contents = fs.readdirSync(dirToCheck)
+  } catch (err) {
+    console.log(err);
+  }
+  contents.forEach(file => {
+    if (fs.lstatSync(path.join(dirToCheck, file)).isFile()) { //check if "file" is a file or not
+      ReturnArr.push(path.join(dirToCheck, file));
+    }
+    else {
+      ReturnArr.push(...returnDaughterFiles(path.join(dirToCheck, file)));
+    }
+  });
+  return (ReturnArr);
+}
 app.get("/search", function (req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   var regex = new RegExp(req.query.q, "i");
   var numberOfSearchResults = req.query.l;
-  var matchedFiles = filesArr.filter((obj) => obj.substring(0,obj.length-4).match(regex));
+  var matchedFiles = filesArr.filter((obj) => obj.substring(0, obj.length - 4).match(regex));
   if (numberOfSearchResults) {
-    matchedFiles = matchedFiles.slice(0,numberOfSearchResults);
+    matchedFiles = matchedFiles.slice(0, numberOfSearchResults);
   }
   res.send(matchedFiles);
 });
 
-app.use(function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With,X-metadata');
-    res.header('Access-Control-Expose-Headers': 'content-type', 'content-disposition', 'x-metadata');
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With,X-metadata');
+  res.header('Access-Control-Expose-Headers', 'content-type', 'content-disposition', 'x-metadata');
 })
 // app.options('*', cors({
 //   origin: '*',
@@ -60,7 +88,7 @@ app.post("/uploadFile", function (req, res) {
       if (err) {
         console.log(err)
         res.send("can upload :SAD:");
-      }else{
+      } else {
         res.send("File uploaded and moved! :happy: ");
       }
     });
@@ -70,6 +98,6 @@ app.post("/uploadFile", function (req, res) {
 
 app.get("/printarr", (req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
-  res.send(JSON.stringify({ filesJson }));
-  console.log(JSON.stringify({ filesJson }));
+  res.send(JSON.stringify({ filesArr }));
+  console.log(JSON.stringify({ filesArr }));
 });
