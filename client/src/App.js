@@ -136,7 +136,6 @@ class MainContent extends React.Component{
           return(
             <>
               <VidComponent srcName={this.state.params}/>
-              <Upload url={this.backendUrl}/>
             </>
           );
       }
