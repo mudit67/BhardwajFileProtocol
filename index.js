@@ -5,7 +5,7 @@ const fs = require("fs");
 const path = require('path');
 const formidable = require("formidable");
 const checkIfFile = path => fs.lstatSync(path).isFile();
-const filesDir = "/home/agent67/ALL_/"; // Use absolute path
+const filesDir = "/home/agent67/Downloads/Persepolis/ND/"; // Use absolute path
 app.use("/", express.static("./client/build"));
 app.use("/files", express.static(filesDir));
 
