@@ -1,1 +1,1 @@
-window.config={ url: "https://4cfd040532ea.ap.ngrok.io", local:"http://localhost:8000"}
+window.config={ url: "https://8cacc8337513.in.ngrok.io", local:"http://localhost:8000"}
